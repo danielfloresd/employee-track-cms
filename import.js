@@ -1,0 +1,72 @@
+// Require mysql-import
+const Importer = require('mysql-import');
+const mysql = require('mysql');
+
+const { exit } = require('process');
+const user = 'root';
+const password = 'mysql';
+const host = 'localhost';
+
+// Create a new instance of mysql-import
+var importer = new Importer({ host, user, password });
+
+// Import a SQL file
+importer.import('db/config.sql').then(function () {
+    console.log('Imported');
+    showData();
+}).catch(function (err) {
+    console.log(err);
+    exit;
+});
+// Exit node process
+
+
+function showData() {
+    // Connnected to database
+    const connection = mysql.createConnection({
+        host: host,
+        user: user,
+        password: password,
+        database: 'employee_track_cms'
+    });
+
+    // Query department table
+    connection.query('SELECT * FROM departments', function (error, results, fields) {
+        if (error) throw error;
+        console.log("------------------ Departments ------------------");
+        console.log("Name");
+        for (var i = 0; i < results.length; i++) {
+            // Log department table
+            console.log(results[i].name);
+        }
+    });
+
+    // Query role table
+    connection.query('SELECT * FROM roles', function (error, results, fields) {
+        if (error) throw error;
+        console.log("------------------ Roles ------------------");
+        console.log("Name");
+        for (let i = 0; i < results.length; i++) {
+            // Loop through results and print out each role
+            console.log(results[i].title);
+        }
+    });
+    console.log("\n");
+    // Query employee table and join with role and department and manager
+    let query = 'SELECT e.id, e.first_name, e.last_name, roles.title, departments.name AS department, roles.salary, CONCAT(m.first_name, " ", m.last_name) AS manager from employees e LEFT JOIN employees m ON e.manager_id = m.id LEFT JOIN roles ON e.role_id = roles.id LEFT JOIN departments ON roles.department_id = departments.id';
+    connection.query(query, function (error, results, fields) {
+        if (error) throw error;
+        console.log("------------------ Employees ------------------");
+        console.log("ID | First Name | Last Name | Role | Department | Salary | Manager");
+
+        for (let i = 0; i < results.length; i++) {
+            console.log(results[i].id + " | " + results[i].first_name + " | " + results[i].last_name + " | " + results[i].title + " | " + results[i].department + " | " + results[i].salary + " | " + results[i].manager);
+        }
+    });
+
+    // node native promisif
+
+    connection.end();
+    exit;
+}
+
