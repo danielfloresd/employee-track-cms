@@ -21,7 +21,7 @@ router.get('/', (req, res) => {
 });
 
 router.post('/', (req, res) => {
-    let { id, name } = req.body;
+    let { name } = req.body;
     Department.create(name).then((department) => {
         res.send(department);
     });
