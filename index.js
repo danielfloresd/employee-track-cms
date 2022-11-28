@@ -20,7 +20,6 @@ const log = new Logger();
 const mainMenuQuestions = [
     {
         type: 'rawlist',
-        name: 'mainMenu',
         message: 'What would you like to do?',
         name: "choice",
         choices: [
