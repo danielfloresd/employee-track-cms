@@ -18,6 +18,14 @@ const getRoles = () => {
     .then(data => data);
 }
 
+const getDatabaseURL = () => {
+  return fetch('/api/database_url')
+    .then(response => response.json())
+    .then(data => {
+      console.log("DATABASE_URL",data);
+    });
+}
+
 const deleteEmployee = (employee) => {
   // Ask for confirmation
   let result = confirm("Are you sure you want to delete " + employee.first_name + " " + employee.last_name + "?");
@@ -873,3 +881,4 @@ const createNewRoleCard = (role) => {
 }
 
 initDepartments();
+getDatabaseURL();
