@@ -13,14 +13,14 @@ router.get('/', (req, res) => {
 });
 
 router.put('/:id', (req, res) => {
-    let { id, title, salary, department } = req.body;
+    let { title, salary, department } = req.body;
     Role.update(id, title, salary, department).then((results) => {
         res.send(results);
     });
 });
 
 router.post('/', (req, res) => {
-    let { id, title, salary, department } = req.body;
+    let { title, salary, department } = req.body;
     Role.create(title, salary, department).then((role) => {
         res.send(role);
     });

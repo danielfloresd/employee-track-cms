@@ -9,11 +9,12 @@ class DBConnection {
 
         console.log("Connecting to database: " + DATABASE_URL);
         this.url = DATABASE_URL;
-        this.connection = mysql.createConnection(DATABASE_URL);
+        this.connection = mysql.createPool(this.url);
+        // this.connection = mysql.createConnection(DATABASE_URL);
 
-        this.connection.connect(function (err) {
-            if (err) throw err;
-        });
+        // this.connection.connect(function (err) {
+        //     if (err) throw err;
+        // });
     };
 
     static getInstance() {

@@ -28,7 +28,7 @@ app.get('/', (req, res) => {
 
 // GET route to database url
 app.get('/api/database_url', (req, res) => {
-    res.json(process.env.DATABASE_URL); 
+    res.json(process.env.DATABASE_URL || "mysql://root:mysql@localhost/employee_track_cms");
 });
 
 

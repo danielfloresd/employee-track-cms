@@ -14,7 +14,7 @@ router.get('/', (req, res) => {
 // Add a new employee
 router.post('/', (req, res) => {
     // Deconstruct the request body
-    let { id, first_name, last_name, role_id, manager_id } = req.body;
+    let { first_name, last_name, role_id, manager_id } = req.body;
     
     Employee.create(first_name, last_name, role_id, manager_id).then((employee) => {
         res.send(employee);
@@ -25,7 +25,7 @@ router.post('/', (req, res) => {
 // Edit an employee
 router.put('/:id', (req, res) => {
     // Deconstruct the request body
-    let { id, first_name, last_name, manager, salary, title } = req.body;
+    let { id, first_name, last_name, manager, title } = req.body;
    
     Employee.updateById(id, first_name, last_name, title, manager).then((results) => {
         res.send(results);
