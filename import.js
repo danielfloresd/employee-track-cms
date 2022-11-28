@@ -3,12 +3,16 @@ const Importer = require('mysql-import');
 const mysql = require('mysql');
 
 const { exit } = require('process');
-const user = 'root';
-const password = 'mysql';
-const host = 'localhost';
+
+const CLEARDB_DATABASE_URL = 'mysql://b0ca17fbc3e177:7b746377@us-cdbr-east-06.cleardb.net/heroku_2e86a661a20b463?reconnect=true';
+const host = 'us-cdbr-east-06.cleardb.net';
+const user = 'b0ca17fbc3e177';
+const password = '7b746377';
+const database = 'heroku_2e86a661a20b463';
+
 
 // Create a new instance of mysql-import
-var importer = new Importer({ host, user, password });
+var importer = new Importer({ host, user, password, database });
 
 // Import a SQL file
 importer.import('db/config.sql').then(function () {

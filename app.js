@@ -26,6 +26,11 @@ app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, '/public/index.html'));
 });
 
+// GET route to database url
+app.get('/api/database_url', (req, res) => {
+    res.json(process.env.DATABASE_URL); 
+});
+
 
 
 module.exports = app;

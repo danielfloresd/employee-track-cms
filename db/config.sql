@@ -1,6 +1,6 @@
-DROP DATABASE IF EXISTS employee_track_cms;
+/* DROP DATABASE IF EXISTS employee_track_cms;
 CREATE DATABASE employee_track_cms;
-USE employee_track_cms;
+USE employee_track_cms; */
 
 /* Create department table with key and name columns */
 CREATE TABLE departments (
