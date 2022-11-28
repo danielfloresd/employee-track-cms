@@ -22,7 +22,7 @@ const getDatabaseURL = () => {
   return fetch('/api/database_url')
     .then(response => response.json())
     .then(data => {
-      console.log("DATABASE_URL",data);
+      console.log("DATABASE_URL", data);
     });
 }
 
@@ -210,7 +210,7 @@ const newDepartment = (department) => {
 
 const loadRoles = () => {
   $("#roles-table").empty();
-  let roles = getRoles().then(data => {
+  getRoles().then(data => {
     ROLES = data;
 
     for (let i = 0; i < data.length; i++) {
@@ -238,11 +238,11 @@ const loadRoles = () => {
 
 const loadDepartments = () => {
   $("#departments-table").empty();
-  let departments = getDepartments()
+  getDepartments()
     .then((data) => {
       DEPARTMENTS = data;
       for (let i = 0; i < data.length; i++) {
-    
+
         let li = $('<li>').append(
           $("<button>")
             .addClass("btn btn-info btn-block")
@@ -273,7 +273,7 @@ const loadDepartments = () => {
 
 const initDepartments = () => {
 
-  let employees = getEmployees()
+  getEmployees()
     .then(data => {
       EMPLOYEES = data;
       selectDepartment();
@@ -316,7 +316,7 @@ const initDepartments = () => {
   );
   // Add listner on button to add role
   $("#roles-add").click(function () {
-  
+
     let role = {
       id: 0,
       title: "",
@@ -340,7 +340,7 @@ const selectDepartment = (department) => {
     let employee = employees[i];
     let tr = $('<tr>');
 
-    td = $('<td>').text(employee.first_name);
+    let td = $('<td>').text(employee.first_name);
     tr.append(td);
     td = $('<td>').text(employee.last_name);
     tr.append(td);
@@ -520,7 +520,7 @@ const createEployeeCard = (employee) => {
     minimumFractionDigits: 0
   });
   let cardSalary = $('<p>').addClass("card-text").text("Salary: " + formatter.format(employee.salary));
-  let cardBreak = $('<br>');
+
   cardBody.append(cardIcon, cardTitle, cardSalary);
   cardDepartmentGroup.append(labelDepartment, cardDepartmentDropdown);
   cardButtons.append(cardRoleGroup, cardDepartmentGroup, cardManagerGroup);
@@ -593,8 +593,6 @@ const createNewEmployeeCard = (employee) => {
   let cardManagerGroup = $('<div>').addClass("btn-group");
   cardManagerGroup.append(labelManager, cardManagerDropdown);
 
-  let cardBreak = $('<br>');
-
   cardBody.append(cardIcon, cardTitle);
   cardButtons.append(cardNameGroup, cardLastNameGroup, cardRoleGroup, cardManagerGroup);
   // Add save and cancel buttons
@@ -664,20 +662,11 @@ const createDropDown = (key, label, options, employee) => {
 const createDepartmentCard = (department) => {
   let card = $('<div>')
     .addClass("card")
-    // .attr("style", "width: 18rem;");
+  // .attr("style", "width: 18rem;");
 
   let cardBody = $('<div>').addClass("card-body");
   let cardIcon = $('<i>').addClass("fas fa-user fa-10x");
   let cardTitle = $('<h4>').addClass("card-title").text(department.name);
-
-  let labelDepartment = $('<p>')
-  
-    .attr("style", "margin-top: 10px; width: 100px;")
-    .text("Department");
-
-
-  let cardButtons = $('<div>').addClass("btn-group-vertical");
-
 
   let budget = EMPLOYEES
     .filter(employee => employee.department === department.name)
@@ -699,7 +688,6 @@ const createDepartmentCard = (department) => {
     .attr("style", "margin-top: 10px;")
     .text("Number of Employees: " + EMPLOYEES.filter(employee => employee.department === department.name).length);
 
-  let cardBreak = $('<br>');
   cardBody.append(cardIcon, cardTitle, cardSalary, cardNumberEmployees);
 
   card.append(cardBody);
@@ -711,7 +699,7 @@ const createDepartmentCard = (department) => {
 const createNewDepartmentCard = (department) => {
   let card = $('<div>')
     .addClass("card")
-    // .attr("style", "width: 18rem;");
+  // .attr("style", "width: 18rem;");
   let cardBody = $('<div>').addClass("card-body");
   let cardIcon = $('<i>').addClass("fas fa-user fa-10x");
   let cardTitle = $('<h4>').addClass("card-title").text("New Department");
@@ -723,7 +711,7 @@ const createNewDepartmentCard = (department) => {
     .attr("id", "department")
     .attr("placeholder", "Enter department name");
   let cardButtons = $('<div>').addClass("btn-group");
-  let cardBreak = $('<br>');
+
   cardBody.append(cardIcon, cardTitle);
   cardButtons.append(labelDepartment, cardDepartment);
   // Add save and cancel buttons
@@ -737,7 +725,7 @@ const createNewDepartmentCard = (department) => {
       $("#modal").modal("hide");
     });
   let cancelButton = $('<button>')
-    
+
     .addClass("btn btn-danger")
     // .text("Cancel")
     .click(function () {
@@ -753,7 +741,7 @@ const createNewDepartmentCard = (department) => {
   // Add button group to modal footer
   $("#modal-footer").empty();
   $("#modal-footer").append(buttonGroup);
-  
+
   cardBody.append(cardButtons);
   card.append(cardBody);
   return card;
@@ -783,13 +771,6 @@ const createRoleCard = (role) => {
   let cardDepartmentGroup = $('<div>').addClass("btn-group");
   cardDepartmentGroup.append(labelDepartment, cardDepartmentDropdown);
 
-
-  // Format employee salary to USD
-  let formatter = new Intl.NumberFormat('en-US', {
-    style: 'currency',
-    currency: 'USD',
-    minimumFractionDigits: 0
-  });
   let cardSalary = $('<label>')
     .addClass("card-text")
     .attr("style", "margin-top: 10px; width: 100px;")
@@ -801,6 +782,7 @@ const createRoleCard = (role) => {
     .val(role.salary);
 
   let cardBreak = $('<br>');
+
   cardBody.append(cardIcon, cardTitle, cardSalary, cardSalaryInput, cardBreak);
   cardDepartmentGroup.append(labelDepartment, cardDepartmentDropdown);
   cardButtons.append(cardDepartmentGroup);
@@ -814,7 +796,7 @@ const createRoleCard = (role) => {
 const createNewRoleCard = (role) => {
   let card = $('<div>')
     .addClass("card")
-    // .attr("style", "width: 18rem;");
+  // .attr("style", "width: 18rem;");
   let cardBody = $('<div>').addClass("card-body");
   let cardIcon = $('<i>').addClass("fas fa-user fa-10x");
   let cardTitle = $('<h4>').addClass("card-title").text("New Role");
