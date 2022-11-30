@@ -91,7 +91,6 @@ const loadRoles = () => {
   $("#roles-table").empty();
   getRoles().then(data => {
     ROLES = data;
-
     for (let i = 0; i < data.length; i++) {
       // Add row to roles-table
       let row = $('<tr>');

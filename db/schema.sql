@@ -1,7 +1,5 @@
 /* Drop employees, roles, and employees tables */
-DROP TABLE IF EXISTS employees;
-DROP TABLE IF EXISTS roles;
-DROP TABLE IF EXISTS departments;
+DROP TABLE IF EXISTS employees, roles, employees;
 
 /* Create department table with key and name columns */
 CREATE TABLE departments (
