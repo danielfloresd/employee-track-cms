@@ -32,4 +32,3 @@ CREATE TABLE employees (
     FOREIGN KEY (role_id) REFERENCES roles (id),
     FOREIGN KEY (manager_id) REFERENCES employees (id)
 );
-
