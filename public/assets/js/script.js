@@ -272,46 +272,39 @@ const selectEmplyee = (employee) => {
   $("#employee-card").append(card);
 };
 
+const appendCardToModal = (card) => {
+  $("#modal-body").empty();
+  $("#modal-body").append(card);
+};
+
 const editEmployee = (employee) => {
   let card = createEployeeCard(employee);
-  $("#modal-employee").empty();
-  $("#modal-employee").append(card);
-  $("#modal").modal("show");
+  appendCardToModal(card);
 };
 
 const addEmployee = (employee) => {
   let card = createNewEmployeeCard(employee);
-  $("#modal-employee").empty();
-  $("#modal-employee").append(card);
-  $("#modal").modal("show");
+  appendCardToModal(card);
 };
 
 const editRole = (role) => {
   let card = createRoleCard(role);
-  $("#modal-employee").empty();
-  $("#modal-employee").append(card);
-  $("#modal").modal("show");
+  appendCardToModal(card);
 };
 
 const addRole = (role) => {
   let card = createNewRoleCard(role);
-  $("#modal-employee").empty();
-  $("#modal-employee").append(card);
-  $("#modal").modal("show");
+  appendCardToModal(card);
 };
 
 const editDepartment = (department) => {
   let card = createDepartmentCard(department);
-  $("#modal-employee").empty();
-  $("#modal-employee").append(card);
-  $("#modal").modal("show");
+  appendCardToModal(card);
 };
 
 const addDepartment = (department) => {
   let card = createNewDepartmentCard(department);
-  $("#modal-employee").empty();
-  $("#modal-employee").append(card);
-  $("#modal").modal("show");
+  appendCardToModal(card);
 };
 
 const createActionButtons = (obj, saveFunc, deleteFunc) => {
