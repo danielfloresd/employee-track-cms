@@ -1,5 +1,7 @@
 /* Drop employees, roles, and employees tables */
-DROP TABLE IF EXISTS employees, roles, employees;
+DROP TABLE IF EXISTS employees,
+    roles,
+    employees;
 
 /* Create department table with key and name columns */
 CREATE TABLE departments (
@@ -30,3 +32,4 @@ CREATE TABLE employees (
     FOREIGN KEY (role_id) REFERENCES roles (id),
     FOREIGN KEY (manager_id) REFERENCES employees (id)
 );
+
