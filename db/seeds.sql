@@ -88,7 +88,7 @@ INSERT INTO employees (first_name, last_name, role_id, manager_id) VALUES ("John
 INSERT INTO employees (first_name, last_name, role_id, manager_id) VALUES ("Jane", "Soto", (select id from roles where title = "Marketing Clerk"), 74);
 INSERT INTO employees (first_name, last_name, role_id, manager_id) VALUES ("Sam", "Soto", (select id from roles where title = "Marketing Intern"), 74);
 
-INSERT INTO employees (first_name, last_name, role_id, manager_id) VALUES ("John", "Flores", (select id from roles where title = "Administration Manager"), 84);
+INSERT INTO employees (first_name, last_name, role_id, manager_id) VALUES ("Johnny", "Flores", (select id from roles where title = "Administration Manager"), 84);
 INSERT INTO employees (first_name, last_name, role_id, manager_id) VALUES ("Jane", "Flores", (select id from roles where title = "Administration Clerk"), 84);
 INSERT INTO employees (first_name, last_name, role_id, manager_id) VALUES ("Sam", "Flores", (select id from roles where title = "Administration Intern"), 84);
 
