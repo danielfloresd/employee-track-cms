@@ -5,17 +5,27 @@ const mysql = require('mysql');
 const { exit } = require('process');
 
 const CLEARDB_DATABASE_URL = 'mysql://b0ca17fbc3e177:7b746377@us-cdbr-east-06.cleardb.net/heroku_2e86a661a20b463?reconnect=true';
-const host = 'us-cdbr-east-06.cleardb.net';
-const user = 'b0ca17fbc3e177';
-const password = '7b746377';
-const database = 'heroku_2e86a661a20b463';
+const DATABASE_URL = process.env.DATABASE_URL || "mysql://root:mysql@localhost/employee_track_cms";
+// const host = 'us-cdbr-east-06.cleardb.net';
+// const user = 'b0ca17fbc3e177';
+// const password = '7b746377';
+// const database = 'heroku_2e86a661a20b463';
+
+const host = 'localhost';
+const user = 'root';
+const password = 'mysql';
+const database = 'employee_track_cms';
 
 
 // Create a new instance of mysql-import
 var importer = new Importer({ host, user, password, database });
 
+// Get command line arguments
+const args = process.argv.slice(2);
+const file = args[0];
+
 // Import a SQL file
-importer.import('db/config.sql').then(function () {
+importer.import(file).then(function () {
     console.log('Imported');
     showData();
 }).catch(function (err) {
@@ -27,12 +37,7 @@ importer.import('db/config.sql').then(function () {
 
 function showData() {
     // Connnected to database
-    const connection = mysql.createConnection({
-        host: host,
-        user: user,
-        password: password,
-        database: 'employee_track_cms'
-    });
+    const connection = mysql.createConnection(CLEARDB_DATABASE_URL);
 
     // Query department table
     connection.query('SELECT * FROM departments', function (error, results, fields) {

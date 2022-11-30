@@ -26,186 +26,65 @@ const getDatabaseURL = () => {
     });
 }
 
+const fetchAPI = (obj,met,table) =>{
+  const url = met == 'POST'?  `/api/${table}` : `/api/${table}/${obj.id}`;
+  fetch(url, {
+    method: met,
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(obj),
+  }).then(response => response.json())
+    .then(data => {
+      // Reload web page
+      location.reload();
+    }
+    )
+    .catch((error) => {
+      console.error('Error:', error);
+      alert(`Error ${met}ing ${table}`);
+    });
+}
+
 const deleteEmployee = (employee) => {
   // Ask for confirmation
   let result = confirm("Are you sure you want to delete " + employee.first_name + " " + employee.last_name + "?");
   if (result) {
-    fetch(`/api/employees/${employee.id}`, {
-      method: 'DELETE',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    }).then(response => response.json())
-      .then(data => {
-        router('Success:', data);
-        alert("Employee deleted");
-        // Reload web page
-        location.reload();
-      })
-      .catch((error) => {
-        console.error('Error:', error);
-        alert("Error deleting employee");
-      });
+    fetchAPI(employee,'DELETE','employees');
   }
 }
 
 const saveEmployee = (employee) => {
-
-  fetch(`/api/employees/${employee.id}`, {
-    method: 'PUT',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(employee),
-  }).then(response => response.json())
-    .then(data => {
-      // Reload web page
-      location.reload();
-    })
-    .catch((error) => {
-      console.error('Error:', error);
-      alert("Error saving employee");
-    }
-    );
+  fetchAPI(employee,'PUT','employees');
 }
 
 const newEmployee = (employee) => {
-
-  fetch(`/api/employees`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(employee),
-  }).then(response => response.json())
-    .then(data => {
-      // Reload web page
-      location.reload();
-    })
-    .catch((error) => {
-      console.error('Error:', error);
-      alert("Error saving employee");
-    }
-    );
+  fetchAPI(employee,'POST','employees');
 }
 
 const saveRole = (role) => {
-
-  fetch(`/api/roles/${role.id}`, {
-    method: 'PUT',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(role),
-  }).then(response => response.json())
-    .then(data => {
-      //  Reload web page
-      location.reload();
-    })
-    .catch((error) => {
-      console.error('Error:', error);
-      alert("Error saving role");
-    }
-    );
+  fetchAPI(role,'PUT','roles');
 }
 
 const deleteRole = (role) => {
-  // Ask for confirmation
-  fetch(`/api/roles/${role.id}`, {
-    method: 'DELETE',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-  }).then(response => response.json())
-    .then(data => {
-      alert("Role deleted");
-      // Reload web page
-      location.reload();
-    })
-    .catch((error) => {
-      console.error('Error:', error);
-      alert("Error deleting role");
-    });
+  fetchAPI(role,'DELETE','roles');
 }
 
 const newRole = (role) => {
-
-  fetch(`/api/roles`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(role),
-  }).then(response => response.json())
-    .then(data => {
-      // Reload web page
-      location.reload();
-    })
-    .catch((error) => {
-      console.error('Error:', error);
-      alert("Error saving role");
-    }
-    );
+  fetchAPI(role,'POST','roles');
 }
 
 const saveDepartment = (department) => {
-
-  fetch(`/api/departments/${department.id}`, {
-    method: 'PUT',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(department),
-  }).then(response => response.json())
-    .then(data => {
-      // Reload web page
-      location.reload();
-    })
-    .catch((error) => {
-      console.error('Error:', error);
-      alert("Error saving department");
-    }
-    );
+  fetchAPI(department,'PUT','departments');
 }
 
 const deleteDepartment = (department) => {
-  // Ask for confirmation
-  fetch(`/api/departments/${department.id}`, {
-    method: 'DELETE',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-  }).then(response => response.json())
-    .then(data => {
-      alert("Department deleted");
-      // Reload web page
-      location.reload();
-    })
-    .catch((error) => {
-      console.error('Error:', error);
-      alert("Error deleting department");
-    });
+  fetchAPI(department,'DELETE','departments');
 }
 
 // Create newDepartment function
 const newDepartment = (department) => {
-
-  fetch(`/api/departments`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(department),
-  }).then(response => response.json())
-    .then(data => {
-      // Reload web page
-      location.reload();
-    })
-    .catch((error) => {
-      console.error('Error:', error);
-      alert("Error saving department");
-    }
-    );
+  fetchAPI(department,'POST','departments');
 }
 
 const loadRoles = () => {
