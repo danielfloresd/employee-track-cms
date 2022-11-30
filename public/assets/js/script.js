@@ -398,14 +398,8 @@ const createEployeeCard = (employee) => {
   cardManagerGroup.append(labelManager, cardManagerDropdown);
 
   // Format employee salary to USD
-  let formatter = new Intl.NumberFormat("en-US", {
-    style: "currency",
-    currency: "USD",
-    minimumFractionDigits: 0,
-  });
-  let cardSalary = $("<p>")
-    .addClass("card-text")
-    .text("Salary: " + formatter.format(employee.salary));
+  let formatter = new Intl.NumberFormat("en-US", {style: "currency",currency: "USD",minimumFractionDigits: 0});
+  let cardSalary = $("<p>").addClass("card-text").text("Salary: " + formatter.format(employee.salary));
 
   cardBody.append(cardIcon, cardTitle, cardSalary);
   cardDepartmentGroup.append(labelDepartment, cardDepartmentDropdown);
@@ -554,14 +548,8 @@ const createDepartmentCard = (department) => {
   ).reduce((total, employee) => total + employee.salary, 0);
 
   // Format employee salary to USD
-  let formatter = new Intl.NumberFormat("en-US", {
-    style: "currency",
-    currency: "USD",
-    minimumFractionDigits: 0,
-  });
-  let cardSalary = $("<p>")
-    .addClass("card-text")
-    .attr("style", "margin-top: 10px;")
+  let formatter = new Intl.NumberFormat("en-US", {style: "currency",currency: "USD",minimumFractionDigits: 0});
+  let cardSalary = $("<p>").addClass("card-text").attr("style", "margin-top: 10px;")
     .text("Budget: " + formatter.format(budget));
 
   let cardNumberEmployees = $("<p>")
