@@ -50,10 +50,10 @@ const deleteEmployee = (employee) => {
   // Ask for confirmation
   let result = confirm(
     "Are you sure you want to delete " +
-      employee.first_name +
-      " " +
-      employee.last_name +
-      "?"
+    employee.first_name +
+    " " +
+    employee.last_name +
+    "?"
   );
   if (result) {
     fetchAPI(employee, "DELETE", "employees");
@@ -232,9 +232,9 @@ const selectDepartment = (department) => {
     // Fromat salary as currency
     let salary = employee.salary
       ? employee.salary.toLocaleString("en-US", {
-          style: "currency",
-          currency: "USD",
-        })
+        style: "currency",
+        currency: "USD",
+      })
       : "";
     td = $("<td>").text(salary);
     tr.append(td);
@@ -520,22 +520,8 @@ const createNewEmployeeCard = (employee) => {
       newEmployee(employee);
       $("#modal").modal("hide");
     });
-  let cancelButton = $("<button>")
-    .addClass("btn btn-danger")
-    // .text("Cancel")
-    .click(function () {
-      $("#modal").modal("hide");
-    });
-  // Add icon to button
-  saveButton.prepend($("<i>").addClass("fas fa-save"));
-  cancelButton.prepend($("<i>").addClass("fas fa-window-close"));
-  // Create horizontal button group
-  let buttonGroup = $("<div>").addClass("btn-group");
-  buttonGroup.append(saveButton, cancelButton);
 
-  // Add button group to modal footer
-  $("#modal-footer").empty();
-  $("#modal-footer").append(buttonGroup);
+  addSaveAndCancelButtons(saveButton);
 
   cardBody.append(cardButtons);
   card.append(cardBody);
@@ -590,8 +576,8 @@ const createDepartmentCard = (department) => {
     .attr("style", "margin-top: 10px;")
     .text(
       "Number of Employees: " +
-        EMPLOYEES.filter((employee) => employee.department === department.name)
-          .length
+      EMPLOYEES.filter((employee) => employee.department === department.name)
+        .length
     );
 
   cardBody.append(cardIcon, cardTitle, cardSalary, cardNumberEmployees);
@@ -629,22 +615,8 @@ const createNewDepartmentCard = (department) => {
       newDepartment(department);
       $("#modal").modal("hide");
     });
-  let cancelButton = $("<button>")
-    .addClass("btn btn-danger")
-    // .text("Cancel")
-    .click(function () {
-      $("#modal").modal("hide");
-    });
-  // Add icon to button
-  saveButton.prepend($("<i>").addClass("fas fa-save"));
-  cancelButton.prepend($("<i>").addClass("fas fa-window-close"));
-  // Create horizontal button group
-  let buttonGroup = $("<div>").addClass("btn-group");
-  buttonGroup.append(saveButton, cancelButton);
-
-  // Add button group to modal footer
-  $("#modal-footer").empty();
-  $("#modal-footer").append(buttonGroup);
+  
+  addSaveAndCancelButtons(saveButton);
 
   cardBody.append(cardButtons);
   card.append(cardBody);
@@ -752,6 +724,14 @@ const createNewRoleCard = (role) => {
       newRole(role);
       $("#modal").modal("hide");
     });
+
+  addSaveAndCancelButtons(saveButton);
+  cardBody.append(cardButtons, cardBreak);
+  card.append(cardBody);
+  return card;
+};
+
+const addSaveAndCancelButtons = (saveButton) => {
   let cancelButton = $("<button>")
     .addClass("btn btn-danger")
     // .text("Cancel")
@@ -767,10 +747,7 @@ const createNewRoleCard = (role) => {
   // Add button group to modal footer
   $("#modal-footer").empty();
   $("#modal-footer").append(buttonGroup);
-  cardBody.append(cardButtons, cardBreak);
-  card.append(cardBody);
-  return card;
-};
+}
 
 initDepartments();
 getDatabaseURL();
