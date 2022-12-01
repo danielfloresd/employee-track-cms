@@ -40,12 +40,12 @@ importer
 
 function showData() {
   // Connnected to database
-  const connection = mysql.createConnection(CLEARDB_DATABASE_URL);
+  const connection = mysql.createConnection(DATABASE_URL);
 
   // Query department table
   connection.query(
     "SELECT * FROM departments",
-    function (error, results, fields) {
+    function (error, results) {
       if (error) throw error;
       console.log("------------------ Departments ------------------");
       console.log("Name");
@@ -57,7 +57,7 @@ function showData() {
   );
 
   // Query role table
-  connection.query("SELECT * FROM roles", function (error, results, fields) {
+  connection.query("SELECT * FROM roles", function (error, results) {
     if (error) throw error;
     console.log("------------------ Roles ------------------");
     console.log("Name");
@@ -70,7 +70,7 @@ function showData() {
   // Query employee table and join with role and department and manager
   let query =
     'SELECT e.id, e.first_name, e.last_name, roles.title, departments.name AS department, roles.salary, CONCAT(m.first_name, " ", m.last_name) AS manager from employees e LEFT JOIN employees m ON e.manager_id = m.id LEFT JOIN roles ON e.role_id = roles.id LEFT JOIN departments ON roles.department_id = departments.id';
-  connection.query(query, function (error, results, fields) {
+  connection.query(query, function (error, results) {
     if (error) throw error;
     console.log("------------------ Employees ------------------");
     console.log(
