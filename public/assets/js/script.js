@@ -50,10 +50,10 @@ const deleteEmployee = (employee) => {
   // Ask for confirmation
   let result = confirm(
     "Are you sure you want to delete " +
-    employee.first_name +
-    " " +
-    employee.last_name +
-    "?"
+      employee.first_name +
+      " " +
+      employee.last_name +
+      "?"
   );
   if (result) {
     fetchAPI(employee, "DELETE", "employees");
@@ -194,6 +194,7 @@ const initDepartments = () => {
       role_id: 0,
       manager_id: 0,
     };
+    console.log("Add employee:", employee);
     addEmployee(employee);
   });
   // Add listner on button to add department
@@ -232,9 +233,9 @@ const selectDepartment = (department) => {
     // Fromat salary as currency
     let salary = employee.salary
       ? employee.salary.toLocaleString("en-US", {
-        style: "currency",
-        currency: "USD",
-      })
+          style: "currency",
+          currency: "USD",
+        })
       : "";
     td = $("<td>").text(salary);
     tr.append(td);
@@ -266,9 +267,9 @@ const selectDepartment = (department) => {
   }
 };
 
-const selectEmplyee = (employee) => {
+const selectEmployee = (employee) => {
   $("#employee-card").empty();
-  let card = createEployeeCard(employee);
+  let card = createEmployeeCard(employee);
   $("#employee-card").append(card);
 };
 
@@ -278,33 +279,45 @@ const appendCardToModal = (card) => {
 };
 
 const editEmployee = (employee) => {
-  let card = createEployeeCard(employee);
+  let card = createEmployeeCard(employee);
   appendCardToModal(card);
+  // Show modal
+  $("#modal").modal("show");
 };
 
 const addEmployee = (employee) => {
   let card = createNewEmployeeCard(employee);
   appendCardToModal(card);
+  // Show modal
+  $("#modal").modal("show");
 };
 
 const editRole = (role) => {
   let card = createRoleCard(role);
   appendCardToModal(card);
+  // Show modal
+  $("#modal").modal("show");
 };
 
 const addRole = (role) => {
   let card = createNewRoleCard(role);
   appendCardToModal(card);
+  // Show modal
+  $("#modal").modal("show");
 };
 
 const editDepartment = (department) => {
   let card = createDepartmentCard(department);
   appendCardToModal(card);
+  // Show modal
+  $("#modal").modal("show");
 };
 
 const addDepartment = (department) => {
   let card = createNewDepartmentCard(department);
   appendCardToModal(card);
+  // Show modal
+  $("#modal").modal("show");
 };
 
 const createActionButtons = (obj, saveFunc, deleteFunc) => {
@@ -343,7 +356,7 @@ const createActionButtons = (obj, saveFunc, deleteFunc) => {
   $("#modal-footer").append(buttonGroup);
 };
 
-const createEployeeCard = (employee) => {
+const createEmployeeCard = (employee) => {
   let card = $("<div>")
     // .attr("style", "width: 18rem;")
     .addClass("card");
@@ -398,8 +411,14 @@ const createEployeeCard = (employee) => {
   cardManagerGroup.append(labelManager, cardManagerDropdown);
 
   // Format employee salary to USD
-  let formatter = new Intl.NumberFormat("en-US", {style: "currency",currency: "USD",minimumFractionDigits: 0});
-  let cardSalary = $("<p>").addClass("card-text").text("Salary: " + formatter.format(employee.salary));
+  let formatter = new Intl.NumberFormat("en-US", {
+    style: "currency",
+    currency: "USD",
+    minimumFractionDigits: 0,
+  });
+  let cardSalary = $("<p>")
+    .addClass("card-text")
+    .text("Salary: " + formatter.format(employee.salary));
 
   cardBody.append(cardIcon, cardTitle, cardSalary);
   cardDepartmentGroup.append(labelDepartment, cardDepartmentDropdown);
@@ -427,7 +446,6 @@ const createNewEmployeeCard = (employee) => {
   let cardFirstName = $("<input>")
     .attr("type", "text")
     .attr("id", "first_name")
-    .attr("value", employee.first_name)
     .attr("style", "width: 150px;");
   // Add last name input with label
   let labelLastName = $("<label>")
@@ -437,7 +455,6 @@ const createNewEmployeeCard = (employee) => {
   let cardLastName = $("<input>")
     .attr("type", "text")
     .attr("id", "last_name")
-    .attr("value", employee.last_name)
     .attr("style", "width: 150px;");
   // Add labels and inputs to div
   let cardNameGroup = $("<div>").addClass("btn-group");
@@ -446,16 +463,18 @@ const createNewEmployeeCard = (employee) => {
   let cardLastNameGroup = $("<div>").addClass("btn-group");
   cardLastNameGroup.append(labelLastName, cardLastName);
 
-  let role = employee.title ? employee.title : "Select";
-  let manager = employee.manager ? employee.manager : "Select";
-
   let labelRole = $("<p>")
     // .addClass("card-subtitle mb-2 text-muted")
     .attr("style", "margin-top: 2px; width: 100px;")
     .text("Role");
 
   let role_options = ROLES.map((role) => role.title);
-  let cardRoleDropdown = createDropDown("title", role, role_options, employee);
+  let cardRoleDropdown = createDropDown(
+    "title",
+    "Select",
+    role_options,
+    employee
+  );
 
   let labelManager = $("<p>")
     // .addClass("card-subtitle mb-2 text-muted")
@@ -466,7 +485,7 @@ const createNewEmployeeCard = (employee) => {
   );
   let cardManagerDropdown = createDropDown(
     "manager",
-    manager,
+    "Select",
     employee_options,
     employee
   );
@@ -548,8 +567,14 @@ const createDepartmentCard = (department) => {
   ).reduce((total, employee) => total + employee.salary, 0);
 
   // Format employee salary to USD
-  let formatter = new Intl.NumberFormat("en-US", {style: "currency",currency: "USD",minimumFractionDigits: 0});
-  let cardSalary = $("<p>").addClass("card-text").attr("style", "margin-top: 10px;")
+  let formatter = new Intl.NumberFormat("en-US", {
+    style: "currency",
+    currency: "USD",
+    minimumFractionDigits: 0,
+  });
+  let cardSalary = $("<p>")
+    .addClass("card-text")
+    .attr("style", "margin-top: 10px;")
     .text("Budget: " + formatter.format(budget));
 
   let cardNumberEmployees = $("<p>")
@@ -557,8 +582,8 @@ const createDepartmentCard = (department) => {
     .attr("style", "margin-top: 10px;")
     .text(
       "Number of Employees: " +
-      EMPLOYEES.filter((employee) => employee.department === department.name)
-        .length
+        EMPLOYEES.filter((employee) => employee.department === department.name)
+          .length
     );
 
   cardBody.append(cardIcon, cardTitle, cardSalary, cardNumberEmployees);
@@ -596,7 +621,7 @@ const createNewDepartmentCard = (department) => {
       newDepartment(department);
       $("#modal").modal("hide");
     });
-  
+
   addSaveAndCancelButtons(saveButton);
 
   cardBody.append(cardButtons);
@@ -728,7 +753,7 @@ const addSaveAndCancelButtons = (saveButton) => {
   // Add button group to modal footer
   $("#modal-footer").empty();
   $("#modal-footer").append(buttonGroup);
-}
+};
 
 initDepartments();
 getDatabaseURL();
