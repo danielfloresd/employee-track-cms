@@ -15,6 +15,12 @@ let DEPARTMENTS = [];
 let ROLES = [];
 let EMPLOYEES = [];
 
+const FORMATTER = new Intl.NumberFormat('en-US', {
+    style: 'currency',
+    currency: 'USD',
+    minimumFractionDigits: 0
+});
+
 const log = new Logger();
 
 const mainMenuQuestions = [
@@ -25,6 +31,8 @@ const mainMenuQuestions = [
         choices: [
             "View All Empoyees",
             "View All Employees By Department",
+            "View All Employees By Manager",
+            "View All Managers",
             "Add Employee",
             "Update Employee Role",
             "Update Employee Manager",
@@ -100,9 +108,9 @@ const confirmDelete = (description, AClass) => {
 
 // ======================= EMPLOYEE SECTION =======================
 const addEmployee = () => {
-    
+
     // Get all employees
-    let role_choices = ROLES.map((role) => role.title );
+    let role_choices = ROLES.map((role) => role.title);
     let manager_choices = EMPLOYEES.map((employee) => employee.first_name + " " + employee.last_name);
     manager_choices.push("None");
 
@@ -115,7 +123,7 @@ const addEmployee = () => {
         {
             type: 'rawinput',
             name: 'lastName',
-            message: "What is the employee's last name?"    
+            message: "What is the employee's last name?"
         },
         {
             type: 'rawlist',
@@ -130,9 +138,9 @@ const addEmployee = () => {
             choices: manager_choices
         }
     ]).then((answers) => {
-      
+
         let role = ROLES.find((role) => role.title == answers.role);
-        
+
         let manager_id = null;
         if (answers.manager !== "None") {
             manager_id = EMPLOYEES.find((employee) => employee.first_name + " " + employee.last_name === answers.manager).id;
@@ -142,14 +150,14 @@ const addEmployee = () => {
             load();
             menu();
         });
-        
+
     });
 }
 
 const updateEmployeeRole = () => {
     // Get all employees
     let employee_choices = EMPLOYEES.map((employee) => employee.name());
-    let role_choices = ROLES.map((role) => role.title );
+    let role_choices = ROLES.map((role) => role.title);
     inquirer.prompt([
         {
             type: 'rawlist',
@@ -194,7 +202,7 @@ const updateEmployeeManager = () => {
         }
     ]).then((answers) => {
 
-        if(answers.manager === answers.employee) {
+        if (answers.manager === answers.employee) {
             log.red("An employee cannot be their own manager!");
             updateEmployeeManager();
             return;
@@ -215,8 +223,8 @@ const updateEmployeeManager = () => {
 const deleteEmployee = () => {
     log.cyan("Delete Employee");
     // Prompt user for employee information
-    let choices =  EMPLOYEES.map((employee) => employee.name());
- 
+    let choices = EMPLOYEES.map((employee) => employee.name());
+
     inquirer.prompt([
         {
             type: 'rawlist',
@@ -230,21 +238,40 @@ const deleteEmployee = () => {
         confirmDelete(answers.name, Employee);
     });
 }
-            
+
 const viewAllEmployees = () => {
     log.green("View All Employees");
     Employee.getAll().then((employees) => {
-        // Format the salary to be in dollars
-        employees.forEach((employee) => {
-            employee.title = employee.getTitle();
-            employee.department = employee.getDepartment();
-            employee.manager = employee.getManager();
-            employee.salary = employee.getSalary();
-        });
-        console.table(employees);
+        console.table(employees.map((employee) => employee.getDescription()));
         menu();
     });
     // console.table(employees);
+}
+
+const viewAllEmployeesByManager = () => {
+    log.green("View Employees By Manager");
+    // Group all employees by their manager
+    let managers = {};
+    EMPLOYEES.forEach((employee) => {
+        let manager = employee.getManager();
+        if (!managers[manager])
+            managers[manager] = [];
+        managers[manager].push(employee.getDescription(false, true));
+    });
+    // Display the employees grouped by their manager
+    for (let manager in managers) {
+        console.group(manager);
+        console.table(managers[manager]);
+        console.groupEnd();
+    }
+    menu();
+}
+
+const viewAllManagers = () => {
+    log.green("View All Managers");
+    // Get all employees
+    console.table(EMPLOYEES.filter((employee) => employee.isManager()).map((employee) => employee.getDescription()));
+    menu();
 }
 
 const viewAllEmployeesByDepartment = () => {
@@ -257,7 +284,7 @@ const viewAllEmployeesByDepartment = () => {
             if (!employeesByDepartment[employee.department])
                 employeesByDepartment[employee.department] = [];
 
-            employeesByDepartment[employee.department].push(employee);
+            employeesByDepartment[employee.department].push(employee.getDescription(true, false));
         });
 
         // Print out the employees by department
@@ -401,8 +428,8 @@ const viewDepartmentBudget = () => {
             });
             // Format the budget to be in dollars
             budgets.push({
-                department: department,
-                budget: departmentBudget.toLocaleString('en-US', { style: 'currency', currency: 'USD' })
+                Department: department,
+                Budget: FORMATTER.format(departmentBudget)
             });
         }
         console.table(budgets);
@@ -438,6 +465,12 @@ const menu = () => {
                     break;
                 case "View All Employees By Department":
                     viewAllEmployeesByDepartment();
+                    break;
+                case "View All Employees By Manager":
+                    viewAllEmployeesByManager();
+                    break;
+                case "View All Managers":
+                    viewAllManagers();
                     break;
                 case "Add Employee":
                     addEmployee();
