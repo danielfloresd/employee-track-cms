@@ -1,6 +1,13 @@
 let EMPLOYEES = [];
 let DEPARTMENTS = [];
 let ROLES = [];
+
+// Global currency formatter
+const formatter = new Intl.NumberFormat("en-US", {
+  style: "currency",
+  currency: "USD",
+  minimumFractionDigits: 0,
+});
 const getDepartments = () => {
   return fetch("/api/departments")
     .then((response) => response.json())
@@ -50,10 +57,10 @@ const deleteEmployee = (employee) => {
   // Ask for confirmation
   let result = confirm(
     "Are you sure you want to delete " +
-      employee.first_name +
-      " " +
-      employee.last_name +
-      "?"
+    employee.first_name +
+    " " +
+    employee.last_name +
+    "?"
   );
   if (result) {
     fetchAPI(employee, "DELETE", "employees");
@@ -233,9 +240,9 @@ const selectDepartment = (department) => {
     // Fromat salary as currency
     let salary = employee.salary
       ? employee.salary.toLocaleString("en-US", {
-          style: "currency",
-          currency: "USD",
-        })
+        style: "currency",
+        currency: "USD",
+      })
       : "";
     td = $("<td>").text(salary);
     tr.append(td);
@@ -411,11 +418,6 @@ const createEmployeeCard = (employee) => {
   cardManagerGroup.append(labelManager, cardManagerDropdown);
 
   // Format employee salary to USD
-  let formatter = new Intl.NumberFormat("en-US", {
-    style: "currency",
-    currency: "USD",
-    minimumFractionDigits: 0,
-  });
   let cardSalary = $("<p>")
     .addClass("card-text")
     .text("Salary: " + formatter.format(employee.salary));
@@ -523,14 +525,13 @@ const createNewEmployeeCard = (employee) => {
       );
       employee.manager_id = EMPLOYEES[manager_index].id;
       // Get selected department
-      newEmployee(employee);
       $("#modal").modal("hide");
+      newEmployee(employee);
     });
 
   addSaveAndCancelButtons(saveButton);
 
-  cardBody.append(cardButtons);
-  card.append(cardBody);
+  card.append(cardBody.append(cardButtons););
   return card;
 };
 
@@ -566,12 +567,6 @@ const createDepartmentCard = (department) => {
     (employee) => employee.department === department.name
   ).reduce((total, employee) => total + employee.salary, 0);
 
-  // Format employee salary to USD
-  let formatter = new Intl.NumberFormat("en-US", {
-    style: "currency",
-    currency: "USD",
-    minimumFractionDigits: 0,
-  });
   let cardSalary = $("<p>")
     .addClass("card-text")
     .attr("style", "margin-top: 10px;")
@@ -582,8 +577,8 @@ const createDepartmentCard = (department) => {
     .attr("style", "margin-top: 10px;")
     .text(
       "Number of Employees: " +
-        EMPLOYEES.filter((employee) => employee.department === department.name)
-          .length
+      EMPLOYEES.filter((employee) => employee.department === department.name)
+        .length
     );
 
   cardBody.append(cardIcon, cardTitle, cardSalary, cardNumberEmployees);
@@ -623,9 +618,7 @@ const createNewDepartmentCard = (department) => {
     });
 
   addSaveAndCancelButtons(saveButton);
-
-  cardBody.append(cardButtons);
-  card.append(cardBody);
+  card.append(cardBody.append(cardButtons));
   return card;
 };
 
