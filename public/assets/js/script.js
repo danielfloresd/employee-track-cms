@@ -433,14 +433,7 @@ const createEmployeeCard = (employee) => {
   return card;
 };
 
-const createNewEmployeeCard = (employee) => {
-  let card = $("<div>")
-    // .attr("style", "width: 18rem;")
-    .addClass("card");
-  let cardBody = $("<div>").addClass("card-body");
-  let cardIcon = $("<i>").addClass("fas fa-user fa-10x");
-  let cardTitle = $("<h3>").addClass("card-title").text("Add User");
-  // Add first name input with label
+const createNewNameGroup = () => {
   let labelFirstName = $("<label>")
     // .addClass("card-subtitle mb-2 text-muted")
     .attr("style", "margin-top: 2px; width: 100px;")
@@ -459,12 +452,18 @@ const createNewEmployeeCard = (employee) => {
     .attr("id", "last_name")
     .attr("style", "width: 150px;");
   // Add labels and inputs to div
-  let cardNameGroup = $("<div>").addClass("btn-group");
-  cardNameGroup.append(labelFirstName, cardFirstName);
-  // Add last name  group
+  let cardFirstNameGroup = $("<div>").addClass("btn-group");
+  cardFirstNameGroup.append(labelFirstName, cardFirstName);
   let cardLastNameGroup = $("<div>").addClass("btn-group");
   cardLastNameGroup.append(labelLastName, cardLastName);
 
+  let cardNameGroup = $("<div>").addClass("btn-horizontal-group");
+  cardNameGroup.append(cardFirstNameGroup, cardLastNameGroup);
+
+  return cardNameGroup;
+}
+
+const createNewRoleGroup = (employee) => {
   let labelRole = $("<p>")
     // .addClass("card-subtitle mb-2 text-muted")
     .attr("style", "margin-top: 2px; width: 100px;")
@@ -478,6 +477,13 @@ const createNewEmployeeCard = (employee) => {
     employee
   );
 
+  let cardRoleGroup = $("<div>").addClass("btn-group");
+  cardRoleGroup.append(labelRole, cardRoleDropdown);
+
+  return cardRoleGroup;
+}
+
+const createNewManagerGroup = (employee) => {
   let labelManager = $("<p>")
     // .addClass("card-subtitle mb-2 text-muted")
     .attr("style", "margin-top: 2px; width: 100px;")
@@ -491,20 +497,29 @@ const createNewEmployeeCard = (employee) => {
     employee_options,
     employee
   );
-  let cardButtons = $("<div>").addClass("btn-group-vertical");
-
-  let cardRoleGroup = $("<div>").addClass("btn-group");
-  cardRoleGroup.append(labelRole, cardRoleDropdown);
 
   let cardManagerGroup = $("<div>").addClass("btn-group");
   cardManagerGroup.append(labelManager, cardManagerDropdown);
+  return cardManagerGroup;
+}
+
+const createNewEmployeeCard = (employee) => {
+  let card = $("<div>")
+    // .attr("style", "width: 18rem;")
+    .addClass("card");
+  let cardBody = $("<div>").addClass("card-body");
+  let cardIcon = $("<i>").addClass("fas fa-user fa-10x");
+  let cardTitle = $("<h3>").addClass("card-title").text("Add User");
+  // Add first name input with label
+
+  let cardButtons = $("<div>").addClass("btn-group-vertical");
+
 
   cardBody.append(cardIcon, cardTitle);
   cardButtons.append(
-    cardNameGroup,
-    cardLastNameGroup,
-    cardRoleGroup,
-    cardManagerGroup
+    createNewNameGroup(),
+    createNewRoleGroup(employee),
+    createNewManagerGroup(employee)
   );
   // Add save and cancel buttons
   let saveButton = $("<button>")
@@ -531,7 +546,7 @@ const createNewEmployeeCard = (employee) => {
 
   addSaveAndCancelButtons(saveButton);
 
-  card.append(cardBody.append(cardButtons););
+  card.append(cardBody.append(cardButtons));
   return card;
 };
 
