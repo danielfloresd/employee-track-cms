@@ -50,10 +50,10 @@ const deleteEmployee = (employee) => {
   // Ask for confirmation
   let result = confirm(
     "Are you sure you want to delete " +
-    employee.first_name +
-    " " +
-    employee.last_name +
-    "?"
+      employee.first_name +
+      " " +
+      employee.last_name +
+      "?"
   );
   if (result) {
     fetchAPI(employee, "DELETE", "employees");
@@ -233,9 +233,9 @@ const selectDepartment = (department) => {
     // Fromat salary as currency
     let salary = employee.salary
       ? employee.salary.toLocaleString("en-US", {
-        style: "currency",
-        currency: "USD",
-      })
+          style: "currency",
+          currency: "USD",
+        })
       : "";
     td = $("<td>").text(salary);
     tr.append(td);
@@ -297,7 +297,6 @@ const editRole = (role) => {
   appendCardToModal(card);
   // Show modal
   $("#modal").modal("show");
-
 };
 
 const addRole = (role) => {
@@ -394,7 +393,12 @@ const createEmployeeCard = (employee) => {
   let employee_options = EMPLOYEES.map(
     (employee) => employee.first_name + " " + employee.last_name
   );
-  let cardManagerDropdown = createDropDown("manager", manager, employee_options, employee);
+  let cardManagerDropdown = createDropDown(
+    "manager",
+    manager,
+    employee_options,
+    employee
+  );
   let cardButtons = $("<div>").addClass("btn-group-vertical");
 
   let cardRoleGroup = $("<div>").addClass("btn-group");
@@ -407,8 +411,14 @@ const createEmployeeCard = (employee) => {
   cardManagerGroup.append(labelManager, cardManagerDropdown);
 
   // Format employee salary to USD
-  let formatter = new Intl.NumberFormat("en-US", { style: "currency", currency: "USD", minimumFractionDigits: 0 });
-  let cardSalary = $("<p>").addClass("card-text").text("Salary: " + formatter.format(employee.salary));
+  let formatter = new Intl.NumberFormat("en-US", {
+    style: "currency",
+    currency: "USD",
+    minimumFractionDigits: 0,
+  });
+  let cardSalary = $("<p>")
+    .addClass("card-text")
+    .text("Salary: " + formatter.format(employee.salary));
 
   cardBody.append(cardIcon, cardTitle, cardSalary);
   cardDepartmentGroup.append(labelDepartment, cardDepartmentDropdown);
@@ -459,7 +469,12 @@ const createNewEmployeeCard = (employee) => {
     .text("Role");
 
   let role_options = ROLES.map((role) => role.title);
-  let cardRoleDropdown = createDropDown("title", "Select", role_options, employee);
+  let cardRoleDropdown = createDropDown(
+    "title",
+    "Select",
+    role_options,
+    employee
+  );
 
   let labelManager = $("<p>")
     // .addClass("card-subtitle mb-2 text-muted")
@@ -468,7 +483,12 @@ const createNewEmployeeCard = (employee) => {
   let employee_options = EMPLOYEES.map(
     (employee) => employee.first_name + " " + employee.last_name
   );
-  let cardManagerDropdown = createDropDown("manager", "Select", employee_options, employee);
+  let cardManagerDropdown = createDropDown(
+    "manager",
+    "Select",
+    employee_options,
+    employee
+  );
   let cardButtons = $("<div>").addClass("btn-group-vertical");
 
   let cardRoleGroup = $("<div>").addClass("btn-group");
@@ -547,8 +567,14 @@ const createDepartmentCard = (department) => {
   ).reduce((total, employee) => total + employee.salary, 0);
 
   // Format employee salary to USD
-  let formatter = new Intl.NumberFormat("en-US", { style: "currency", currency: "USD", minimumFractionDigits: 0 });
-  let cardSalary = $("<p>").addClass("card-text").attr("style", "margin-top: 10px;")
+  let formatter = new Intl.NumberFormat("en-US", {
+    style: "currency",
+    currency: "USD",
+    minimumFractionDigits: 0,
+  });
+  let cardSalary = $("<p>")
+    .addClass("card-text")
+    .attr("style", "margin-top: 10px;")
     .text("Budget: " + formatter.format(budget));
 
   let cardNumberEmployees = $("<p>")
@@ -556,8 +582,8 @@ const createDepartmentCard = (department) => {
     .attr("style", "margin-top: 10px;")
     .text(
       "Number of Employees: " +
-      EMPLOYEES.filter((employee) => employee.department === department.name)
-        .length
+        EMPLOYEES.filter((employee) => employee.department === department.name)
+          .length
     );
 
   cardBody.append(cardIcon, cardTitle, cardSalary, cardNumberEmployees);
@@ -727,7 +753,7 @@ const addSaveAndCancelButtons = (saveButton) => {
   // Add button group to modal footer
   $("#modal-footer").empty();
   $("#modal-footer").append(buttonGroup);
-}
+};
 
 initDepartments();
 getDatabaseURL();
