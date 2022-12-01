@@ -269,11 +269,11 @@ const selectDepartment = (department) => {
   }
 };
 
-const selectEmployee = (employee) => {
-  $("#employee-card").empty();
-  let card = createEmployeeCard(employee);
-  $("#employee-card").append(card);
-};
+// const selectEmployee = (employee) => {
+//   $("#employee-card").empty();
+//   let card = createEmployeeCard(employee);
+//   $("#employee-card").append(card);
+// };
 
 const appendCardToModal = (card) => {
   $("#modal-body").empty();
