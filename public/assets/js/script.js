@@ -41,12 +41,7 @@ const fetchAPI = (obj, met, table) => {
       "Content-Type": "application/json",
     },
     body: JSON.stringify(obj),
-  })
-    .then((response) => response.json())
-    .then((data) => {
-      // Reload web page
-      location.reload();
-    })
+  }).then(() => location.reload())
     .catch((error) => {
       console.error("Error:", error);
       alert(`Error ${met}ing ${table}`);
