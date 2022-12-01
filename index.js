@@ -329,7 +329,7 @@ const viewAllRoles = () => {
     Role.getAll().then((roles) => {
         // Format the salary to be in dollars
         let roles_desc = roles.map((role) => role.getDescription());
-        console.table(roles_desc);
+        console.table(role_desc);
         menu();
     });
 }

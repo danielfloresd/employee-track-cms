@@ -252,7 +252,6 @@ const selectDepartment = (department) => {
 
     let deleteButton = $("<button>")
       .addClass("btn btn-outline-danger btn-sm")
-      // .text("Delete")
       .click(function () {
         deleteEmployee(employee);
       });
@@ -260,7 +259,6 @@ const selectDepartment = (department) => {
     deleteButton.prepend($("<i>").addClass("fas fa-trash-alt"));
     tdActions.append(deleteButton);
 
-    // tr.append(tdActions);
     // Add double click event to row
     tr.dblclick(function () {
       editEmployee(employee);
@@ -358,6 +356,38 @@ const createActionButtons = (obj, saveFunc, deleteFunc) => {
   $("#modal-footer").append(buttonGroup);
 };
 
+const createEmployeeRoleGroup = (employee) => {
+  let role = employee.title ? employee.title : "Select";
+  let role_options = ROLES.map((role) => role.title);
+  let cardRoleDropdown = createDropDown("title", role, role_options, employee);
+  let cardRoleGroup = $("<div>").addClass("btn-group");
+  
+  let labelRole = $("<p>")
+    // .addClass("card-subtitle mb-2 text-muted")
+    .attr("style", "margin-top: 2px; width: 100px;")
+    .text("Role");
+
+  cardRoleGroup.append(labelRole, cardRoleDropdown);
+  return cardRoleGroup;
+}
+
+const createEmployeeDepartmentGroup = (employee) => {
+  let department = employee.department ? employee.department : "Select";
+  let labelDepartment = $("<p>")
+  // .addClass("card-subtitle mb-2 text-muted")
+  .attr("style", "margin-top: 2px; width: 100px;")
+  .text("Department");
+// let cardDepartmentDropdown = createDropDown(department);
+let cardDepartmentDropdown = $("<p>")
+  // .addClass("card-subtitle mb-2 text-muted")
+  .attr("style", "margin-top: 2px; width: 100px;")
+  .text(department);
+  let cardDepartmentGroup = $("<div>").addClass("btn-group");
+  cardDepartmentGroup.append(labelDepartment, cardDepartmentDropdown);
+  return cardDepartmentGroup;
+
+}
+
 const createEmployeeCard = (employee) => {
   let card = $("<div>")
     // .attr("style", "width: 18rem;")
@@ -367,27 +397,11 @@ const createEmployeeCard = (employee) => {
   let cardTitle = $("<h3>")
     .addClass("card-title")
     .text(employee.first_name + " " + employee.last_name);
-  let role = employee.title ? employee.title : "Select";
-  let department = employee.department ? employee.department : "Select";
+
+  
   let manager = employee.manager ? employee.manager : "Select";
 
-  let labelRole = $("<p>")
-    // .addClass("card-subtitle mb-2 text-muted")
-    .attr("style", "margin-top: 2px; width: 100px;")
-    .text("Role");
-
-  let role_options = ROLES.map((role) => role.title);
-  let cardRoleDropdown = createDropDown("title", role, role_options, employee);
-  let labelDepartment = $("<p>")
-    // .addClass("card-subtitle mb-2 text-muted")
-    .attr("style", "margin-top: 2px; width: 100px;")
-    .text("Department");
-  // let cardDepartmentDropdown = createDropDown(department);
-  let cardDepartmentDropdown = $("<p>")
-    // .addClass("card-subtitle mb-2 text-muted")
-    .attr("style", "margin-top: 2px; width: 100px;")
-    .text(department);
-
+  
   let labelManager = $("<p>")
     // .addClass("card-subtitle mb-2 text-muted")
     .attr("style", "margin-top: 2px; width: 100px;")
@@ -403,11 +417,6 @@ const createEmployeeCard = (employee) => {
   );
   let cardButtons = $("<div>").addClass("btn-group-vertical");
 
-  let cardRoleGroup = $("<div>").addClass("btn-group");
-  cardRoleGroup.append(labelRole, cardRoleDropdown);
-
-  let cardDepartmentGroup = $("<div>").addClass("btn-group");
-  cardDepartmentGroup.append(labelDepartment, cardDepartmentDropdown);
 
   let cardManagerGroup = $("<div>").addClass("btn-group");
   cardManagerGroup.append(labelManager, cardManagerDropdown);
@@ -418,8 +427,10 @@ const createEmployeeCard = (employee) => {
     .text("Salary: " + formatter.format(employee.salary));
 
   cardBody.append(cardIcon, cardTitle, cardSalary);
-  cardDepartmentGroup.append(labelDepartment, cardDepartmentDropdown);
-  cardButtons.append(cardRoleGroup, cardDepartmentGroup, cardManagerGroup);
+  
+  cardButtons.append(createEmployeeRoleGroup(employee));
+  cardButtons.append(createEmployeeDepartmentGroup(employee));
+  cardButtons.append(cardManagerGroup);
   // Add save and cancel buttons
   createActionButtons(employee, saveEmployee, deleteEmployee);
 
