@@ -23,31 +23,6 @@ const FORMATTER = new Intl.NumberFormat('en-US', {
 
 const log = new Logger();
 
-const mainMenuQuestions = [
-    {
-        type: 'rawlist',
-        message: 'What would you like to do?',
-        name: "choice",
-        choices: [
-            "View All Empoyees",
-            "View All Employees By Department",
-            "View All Employees By Manager",
-            "View All Managers",
-            "Add Employee",
-            "Update Employee Role",
-            "Update Employee Manager",
-            "View All Roles",
-            "Add Role",
-            "View All Departments",
-            "Add Department",
-            "Delete Department",
-            "Delete Role",
-            "Delete Employee",
-            "View Department Budget"
-        ]
-    }
-]
-
 const load = () => {
     // Get all roles
     getEmployeeChoices();
@@ -353,10 +328,8 @@ const deleteRole = () => {
 const viewAllRoles = () => {
     Role.getAll().then((roles) => {
         // Format the salary to be in dollars
-        roles.forEach((role) => {
-            role.salary = role.salary.toLocaleString('en-US', { style: 'currency', currency: 'USD' });
-        });
-        console.table(roles);
+        let roles_desc = roles.map((role) => role.getDescription());
+        console.table(roles_desc);
         menu();
     });
 }
@@ -453,61 +426,43 @@ const into = () => {
 
 }
 
+const menuMap = {
+    "View All Employees": viewAllEmployees,
+    "View All Employees By Manager": viewAllEmployeesByManager,
+    "View All Employees By Department": viewAllEmployeesByDepartment,
+    "Add Employee": addEmployee,
+    "Update Employee Role": updateEmployeeRole,
+    "Update Employee Manager": updateEmployeeManager,
+    "Delete Employee": deleteEmployee,
+    "View All Managers": viewAllManagers,
+    "View All Roles": viewAllRoles,
+    "Add Role": addRole,
+    "Delete Role": deleteRole,
+    "View All Departments": viewAllDepartments,
+    "Add Department": addDepartment,
+    "Delete Department": deleteDepartment,
+    "View Department Budget": viewDepartmentBudget
+}
 
+
+const mainMenuQuestions = [
+    {
+        type: 'rawlist',
+        message: 'What would you like to do?',
+        name: "choice",
+        choices: Object.keys(menuMap)
+    }
+]
 
 const menu = () => {
     log.green("Please select from the following options");
     inquirer.prompt(mainMenuQuestions)
         .then((answers) => {
-            switch (answers.choice) {
-                case "View All Empoyees":
-                    viewAllEmployees();
-                    break;
-                case "View All Employees By Department":
-                    viewAllEmployeesByDepartment();
-                    break;
-                case "View All Employees By Manager":
-                    viewAllEmployeesByManager();
-                    break;
-                case "View All Managers":
-                    viewAllManagers();
-                    break;
-                case "Add Employee":
-                    addEmployee();
-                    break;
-                case "Update Employee Role":
-                    updateEmployeeRole();
-                    break;
-                case "Update Employee Manager":
-                    updateEmployeeManager();
-                    break;
-                case "View All Roles":
-                    viewAllRoles();
-                    break;
-                case "Add Role":
-                    addRole();
-                    break;
-                case "View All Departments":
-                    viewAllDepartments();
-                    break;
-                case "Add Department":
-                    addDepartment();
-                    break;
-                case "Delete Department":
-                    deleteDepartment();
-                    break;
-                case "Delete Role":
-                    deleteRole();
-                    break;
-                case "Delete Employee":
-                    deleteEmployee();
-                    break;
-                case "View Department Budget":
-                    viewDepartmentBudget();
-                    break;
-                default:
-                    log.red("Invalid choice");
-                    menu();
+            if (menuMap[answers.choice]) {
+                menuMap[answers.choice]();
+            } else {
+                log.red("Invalid choice");
+                menu();
             }
         })
 }
