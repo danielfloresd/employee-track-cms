@@ -4,8 +4,8 @@ const mysql = require("mysql");
 
 const { exit } = require("process");
 
-const CLEARDB_DATABASE_URL =
-  "mysql://b0ca17fbc3e177:7b746377@us-cdbr-east-06.cleardb.net/heroku_2e86a661a20b463?reconnect=true";
+// const CLEARDB_DATABASE_URL =
+//   "mysql://b0ca17fbc3e177:7b746377@us-cdbr-east-06.cleardb.net/heroku_2e86a661a20b463?reconnect=true";
 const DATABASE_URL =
   process.env.DATABASE_URL || "mysql://root:mysql@localhost/employee_track_cms";
 // const host = 'us-cdbr-east-06.cleardb.net';
