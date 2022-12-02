@@ -79,6 +79,7 @@ const deleteRole = (role) => {
 };
 
 const newRole = (role) => {
+  console.log("New role:", role);
   fetchAPI(role, "POST", "roles");
 };
 
@@ -105,12 +106,7 @@ const loadRoles = () => {
       let role = data[i];
       let title = $("<td>").text(role.title);
       // Format salary to currency
-      let salary = $("<td>").text(
-        role.salary.toLocaleString("en-US", {
-          style: "currency",
-          currency: "USD",
-        })
-      );
+      let salary = $("<td>").text(formatter.format(role.salary));
       let department = $("<td>").text(role.department);
 
       row.append(title);
@@ -665,38 +661,46 @@ const createRoleCard = (role) => {
   return card;
 };
 
+const createNewSalaryGroup = () => {
+  let labelSalary = $("<p>")
+    .attr("style", "margin-top: 10px; width: 100px;")
+    .text("Salary");
+  let cardSalaryInput = $("<input>")
+    .attr("id", "salary")
+    .attr("type", "number")
+    .attr("placeholder", "Enter salary");
+  let cardSalaryGroup = $("<div>").addClass("btn-group");
+  cardSalaryGroup.append(labelSalary, cardSalaryInput);
+  return cardSalaryGroup;
+}
+
+const createNewTitleGroup = () => {
+  let labelTitle = $("<p>")
+    .attr("style", "margin-top: 10px; width: 100px;")
+    .text("Title");
+  let cardTitleInput = $("<input>")
+    .attr("id", "title")
+    .addClass("form-control")
+    .attr("placeholder", "Enter role title");
+  let cardTitleGroup = $("<div>").addClass("btn-group");
+  cardTitleGroup.append(labelTitle, cardTitleInput);
+  return cardTitleGroup;
+}
+
 const createNewRoleCard = (role) => {
   let card = $("<div>").addClass("card");
   // .attr("style", "width: 18rem;");
   let cardBody = $("<div>").addClass("card-body");
   let cardIcon = $("<i>").addClass("fas fa-user fa-10x");
   let cardTitle = $("<h4>").addClass("card-title").text("New Role");
-  let labelTitle = $("<p>")
-    .attr("style", "margin-top: 10px; width: 100px;")
-    .text("Title");
-  let cardTitleInput = $("<input>")
-    .addClass("form-control")
-    .attr("id", "title")
-    .attr("placeholder", "Enter role title");
 
-  let labelSalary = $("<p>")
-    .attr("style", "margin-top: 10px; width: 100px;")
-    .text("Salary");
-  let cardSalaryInput = $("<input>")
-    .attr("type", "number")
-    .attr("id", "salary")
-    .attr("placeholder", "Enter salary");
   let cardButtons = $("<div>").addClass("btn-group-vertical");
-  let cardBreak = $("<br>");
-  cardBody.append(cardIcon, cardTitle);
+
   // Create horizontal button group for title, department, and salary
-  let cardTitleGroup = $("<div>").addClass("btn-group");
-  cardTitleGroup.append(labelTitle, cardTitleInput);
-  let cardSalaryGroup = $("<div>").addClass("btn-group");
-  cardSalaryGroup.append(labelSalary, cardSalaryInput);
-  cardButtons.append(cardTitleGroup);
+
+  cardButtons.append(createNewTitleGroup());
   cardButtons.append(createEmployeeDepartmentGroup(role));
-  cardButtons.append(cardSalaryGroup);
+  cardButtons.append(createNewSalaryGroup());
 
   // Add save and cancel buttons
   let saveButton = $("<button>")
@@ -709,7 +713,7 @@ const createNewRoleCard = (role) => {
     });
 
   addSaveAndCancelButtons(saveButton);
-  cardBody.append(cardButtons, cardBreak);
+  cardBody.append(cardIcon, cardTitle, cardButtons, $("<br>"));
   card.append(cardBody);
   return card;
 };
