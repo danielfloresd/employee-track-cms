@@ -10,139 +10,122 @@
   <link type="image/png" sizes="96x96" rel="icon" href="./assets/images/icons8-code-blocks-96.png">
   <link type="image/png" sizes="120x120" rel="icon" href="./assets/images/icons8-code-blocks-120.png">
   <title>Employee Tracker CMS</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/4.1.3/flatly/bootstrap.min.css" />
+  <!-- CSS only -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css"
     integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous" />
   <link rel="stylesheet" href="./assets/css/styles.css" />
 </head>
 
 <body>
-  <nav class="navbar navbar-dark bg-info">
+  <nav class="navbar navbar-dark bg-primary">
     <a class="navbar-brand" href="/">
       <img src="https://img.icons8.com/glyph-neue/32/FFFFFF/code-blocks.png" />
-      Employee Tracker CMS</a>
-    <a class="navbar-brand" href="/employees">Employees</a>
-    <div class="icons">
-      <a id="employee-add" href="#" class="text-light">
-        <i class="fas fa-plus text-light"></i>
-      </a>
-      <!-- <a href="/roles"><i class="fas fa-edit text-light"></i></a> -->
-    </div>
+      Employee Tracker CMS
+    </a>
   </nav>
-  <main>
-    <div class="container-fluid">
-      <div class="row">
-        <div class="col-1 list-container">
-          <div class="card">
-            <ul id="employees" class="list-group"></ul>
-          </div>
+  <ul class="nav nav-pills mb-3" id="myTab" role="tablist">
+    <li class="nav-item" role="presentation">
+      <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home-tab-pane" type="button"
+        role="tab" aria-controls="home-tab-pane" aria-selected="true">Employees</button>
+    </li>
+    <li class="nav-item" role="presentation">
+      <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile-tab-pane" type="button"
+        role="tab" aria-controls="profile-tab-pane" aria-selected="false">Departments</button>
+    </li>
+    <li class="nav-item" role="presentation">
+      <button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact-tab-pane" type="button"
+        role="tab" aria-controls="contact-tab-pane" aria-selected="false">Roles</button>
+    </li>
+  </ul>
+  <div class="tab-content" id="myTabContent">
+    <div class="tab-pane fade show active" id="home-tab-pane" role="tabpanel" aria-labelledby="home-tab" tabindex="0">
+      <div class="btn-group">
+        <div class="icons">
+          <button id="employee-add" href="#" class="btn btn-link">
+            <i class="fas fa-plus"></i>
+          </button>
         </div>
-        <div class="col-11 container">
-          <div class="row">
-            <table class="table table-striped table-hover table-secondary table-bordered table-sm">
-              <thead>
-                <tr>
-                  <th scope="col">First Name</th>
-                  <th scope="col">Last Name</th>
-                  <th scope="col">Role</th>
-                  <th scope="col">Salary</th>
-                  <th scope="col">Department</th>
-                  <th scope="col">Manager</th>
-                </tr>
-              </thead>
-              <tbody id="employee-table">
-              </tbody>
-            </table>
-          </div>
-          <div id="config-panel" class="row">
-            <div class="col-4">
-              <nav class="navbar navbar-dark bg-info">
-                <a class="navbar-brand" href="/"></a>
-                <a class="navbar-brand" href="/employees">Departments</a>
-                <div class="icons">
-                  <a id="departments-add" href="#" class="text-light">
-                    <i class="fas fa-plus text-light"></i>
-                  </a>
-                  <!-- <a href="/roles"><i class="fas fa-edit text-light"></i></a> -->
-                </div>
-              </nav>
-              <table class="table table-striped table-hover table-secondary table-bordered table-sm">
-                <thead>
-                  <tr>
-                    <th>Name</th>
-                    <th># Employees</th>
-                    <th>Budget</th>
-                  </tr>
-                </thead>
-                <tbody id="departments-table"></tbody>
-              </table>
-            </div>
-            <div class="col-8">
-              <nav class="navbar navbar-dark bg-info">
-                <a class="navbar-brand" href="/"></a>
-                <a class="navbar-brand" href="#">Roles</a>
-                <div class="icons">
-                  <a id="roles-add" href="#" class="text-light">
-                    <i class="fas fa-plus text-light"></i>
-                  </a>
-                  <!-- <a href="/roles"><i class="fas fa-edit text-light"></i></a> -->
-                </div>
-              </nav>
-              <table class="table table-striped table-hover table-secondary table-bordered table-sm">
-                <thead>
-                  <tr>
-                    <th>Title</th>
-                    <th>Salary</th>
-                    <th>Department</th>
-                  </tr>
-                </thead>
-                <tbody id="roles-table"></tbody>
-              </table>
-            </div>
-          </div>
+        <div class="dropdown">
+          <button class="btn btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Select Department
+          </button>
+          <ul class="dropdown-menu" id="departments-dropdown">
+          </ul>
         </div>
       </div>
+      <table class="table table-striped table-hover table-secondary table-bordered table-sm">
+        <thead id="employee-table-header">
+        </thead>
+        <tbody id="employee-table">
+        </tbody>
+      </table>
     </div>
-    <!-- Add bootsrap footer -->
-    <footer class="bg-light text-center text-white">
-      <!-- Grid container -->
-      <div class="container p-4 pb-0">
-        <!-- Section: Social media -->
-        <section class="mb-4">
-          <a
-            class="btn text-white btn-floating m-1"
-            style="background-color: #0082ca;"
-            href="https://www.linkedin.com/in/danielfloresd/"
-            role="button"
-            ><i class="fab fa-linkedin-in"></i
-          ></a>
-          <!-- Github -->
-          <a
-            class="btn text-white btn-floating m-1"
-            style="background-color: #333333;"
-            href="https://github.com/danielfloresd"
-            role="button"
-            ><i class="fab fa-github"></i
-          ></a>
-        </section>
-        <!-- Section: Social media -->
+    <div class="tab-pane fade" id="profile-tab-pane" role="tabpanel" aria-labelledby="profile-tab" tabindex="0">
+      <div class="icons">
+        <button id="departments-add" href="#" class="btn btn-link">
+          <i class="fas fa-plus"></i>
+        </button>
       </div>
-      <!-- Grid container -->
+      <table class="table table-striped table-hover table-secondary table-bordered table-sm">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th># Employees</th>
+            <th>Budget</th>
+          </tr>
+        </thead>
+        <tbody id="departments-table"></tbody>
+      </table>
+    </div>
+    <div class="tab-pane fade" id="contact-tab-pane" role="tabpanel" aria-labelledby="contact-tab" tabindex="0">
+      <div class="icons">
+        <button id="roles-add" href="#" class="btn btn-link">
+          <i class="fas fa-plus"></i>
+        </button>
+      </div>
+      <table class="table table-striped table-hover table-secondary table-bordered table-sm">
+        <thead>
+          <tr>
+            <th>Title</th>
+            <th>Salary</th>
+            <th>Department</th>
+          </tr>
+        </thead>
+        <tbody id="roles-table"></tbody>
+      </table>
+    </div>
+  </div>
+  <footer class="bg-light text-center text-white">
+    <!-- Grid container -->
+    <div class="container p-4 pb-0">
+      <!-- Section: Social media -->
+      <section class="mb-4">
+        <a class="btn text-white btn-floating m-1" style="background-color: #0d6efd;"
+          href="https://www.linkedin.com/in/danielfloresd/" role="button"><i class="fab fa-linkedin-in"></i></a>
+        <!-- Github -->
+        <a class="btn text-white btn-floating m-1" style="background-color: #333333;"
+          href="https://github.com/danielfloresd" role="button"><i class="fab fa-github"></i></a>
+      </section>
+      <!-- Section: Social media -->
+    </div>
+    <!-- Grid container -->
 
-      <!-- Copyright -->
-      <div class="text-center p-3" style="background-color: #3498DB">
-        © 2022 Copyright:
-        <a class="text-white" href="http://danielfloresd.com/">danielfloresd.com</a>
-      </div>
-      <!-- Copyright -->
-    </footer>
+    <!-- Copyright -->
+    <div class="text-center p-3" style="background-color: #0d6efd">
+      © 2022 Copyright:
+      <a class="text-white" href="http://danielfloresd.com/">danielfloresd.com</a>
+    </div>
+    <!-- Copyright -->
+  </footer>
   <!-- Add edit modal -->
   <!-- Modal -->
   <div class="modal fade" id="modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
-        <div class="modal-header">
-        </div>
+        <!-- <div class="modal-header">
+        </div> -->
         <div id="modal-body" class="modal-body">
         </div>
         <div id="modal-footer" class="modal-footer">
@@ -150,18 +133,19 @@
       </div>
     </div>
   </div>
-
-
   <!-- Add bootstrap and jQuery -->
   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
     integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
     crossorigin="anonymous"></script>
   <!-- Add popper.js -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
-    integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
-    crossorigin="anonymous"></script>
+  <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+      integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+      crossorigin="anonymous"></script> -->
 
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+  <!-- JavaScript Bundle with Popper -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
+    crossorigin="anonymous"></script>
   <script src="./assets/js/script.js"></script>
 </body>
 

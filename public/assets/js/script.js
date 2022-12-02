@@ -114,7 +114,7 @@ const loadRoles = () => {
       row.append(department);
 
       // Add double click event to row
-      row.dblclick(function () {
+      row.click(function () {
         editRole(role);
       });
 
@@ -125,15 +125,14 @@ const loadRoles = () => {
 
 const createDepartmentFilterButtons = (data) => {
   for (let i = 0; i < data.length; i++) {
-    let li = $("<li>")
-      .append(
-        $("<button>").addClass("btn btn-info btn-block").text(data[i].name)
-      )
+    let btn = $("<a>")
+      .addClass("dropdown-item")
+      .text(data[i].name)
       .attr("id", data[i].id)
       .click(function () {
         selectDepartment(data[i]);
       });
-    $("#employees").append(li);
+    $("#departments-dropdown").append(btn);
   }
 }
 
@@ -171,7 +170,7 @@ const loadDepartments = () => {
       row.append($("<td>").text(formatter.format(budget)));
 
       // Add double click event to row
-      row.dblclick(function () {
+      row.click(function () {
         editDepartment(data[i]);
       });
 
@@ -184,12 +183,13 @@ const loadDepartments = () => {
 
 const createAllEmployeesButton = () => {
   // Add button to show all employees
-  let li = $("<li>")
-    .append($("<button>").addClass("btn btn-info btn-block").text("All"))
+  let a = $("<a>")
+    .addClass("dropdown-item")
+    .text("All")
     .click(function () {
       selectDepartment();
     });
-  $("#employees").append(li);
+  $("#departments-dropdown").append(a);
 }
 
 const addAddListeners = () => {
@@ -234,6 +234,19 @@ const selectDepartment = (department) => {
   let employees = !department
     ? EMPLOYEES
     : EMPLOYEES.filter((employee) => employee.department === department.name);
+  // Check the with of the view to see if its a mobile device
+  let isMobile = window.innerWidth < 768;
+
+  let columns = isMobile ? ["First Name", "Last Name", "Role", "Salary"] :
+    ["First Name", "Last Name", "Role", "Salary", "Department", "Manager"];
+
+  let header = $("<tr>");
+  for (let i = 0; i < columns.length; i++) {
+    let th = $("<th>").text(columns[i]);
+    header.append(th);
+  }
+  $("#employee-table-header").empty();
+  $("#employee-table-header").append(header);
   // Add icon to first column
   for (let i = 0; i < employees.length; i++) {
     let employee = employees[i];
@@ -242,10 +255,12 @@ const selectDepartment = (department) => {
     tr.append($("<td>").text(employee.last_name));
     tr.append($("<td>").text(employee.title));
     tr.append($("<td>").text(employee.salary ? formatter.format(employee.salary) : ""));
-    tr.append($("<td>").text(employee.department));
-    tr.append($("<td>").text(employee.manager));
+    if (!isMobile) {
+      tr.append($("<td>").text(employee.department));
+      tr.append($("<td>").text(employee.manager));
+    }
     // Add double click event to row
-    tr.dblclick(function () {
+    tr.click(function () {
       editEmployee(employee);
     });
     $("#employee-table").append(tr);
@@ -308,7 +323,7 @@ const addDepartment = (department) => {
 const createActionButtons = (obj, saveFunc, deleteFunc) => {
   // Add save and cancel buttons
   let saveButton = $("<button>")
-    .addClass("btn btn-info")
+    .addClass("btn btn-primary")
     // .text("Save")
     .click(function () {
       saveFunc(obj);
@@ -394,11 +409,11 @@ const createEmployeeManagerGroup = (employee) => {
 
 const createEmployeeCard = (employee) => {
   let card = $("<div>")
-    // .attr("style", "width: 18rem;")
     .addClass("card");
+  let cardHeader = $("<h2>").addClass("card-header").text("Employee");
   let cardBody = $("<div>").addClass("card-body");
   let cardIcon = $("<i>").addClass("fas fa-user fa-10x");
-  let cardTitle = $("<h3>")
+  let cardTitle = $("<h4>")
     .addClass("card-title")
     .text(employee.first_name + " " + employee.last_name);
 
@@ -418,7 +433,7 @@ const createEmployeeCard = (employee) => {
   createActionButtons(employee, saveEmployee, deleteEmployee);
 
   cardBody.append(cardButtons);
-  card.append(cardBody);
+  card.append(cardHeader,cardBody);
   return card;
 };
 
@@ -494,11 +509,11 @@ const createNewManagerGroup = (employee) => {
 
 const createNewEmployeeCard = (employee) => {
   let card = $("<div>")
-    // .attr("style", "width: 18rem;")
     .addClass("card");
+  let cardHeader = $("<h2>").addClass("card-header").text("New Employee");
   let cardBody = $("<div>").addClass("card-body");
   let cardIcon = $("<i>").addClass("fas fa-user fa-10x");
-  let cardTitle = $("<h3>").addClass("card-title").text("Add User");
+  let cardTitle = $("<h4>").addClass("card-title").text("Add User");
   // Add first name input with label
 
   let cardButtons = $("<div>").addClass("btn-group-vertical");
@@ -512,7 +527,7 @@ const createNewEmployeeCard = (employee) => {
   );
   // Add save and cancel buttons
   let saveButton = $("<button>")
-    .addClass("btn btn-info")
+    .addClass("btn btn-primary")
     // .text("Save")
     .click(function () {
       saveNewEmployee(employee);
@@ -521,7 +536,7 @@ const createNewEmployeeCard = (employee) => {
     });
 
   addSaveAndCancelButtons(saveButton);
-  card.append(cardBody.append(cardButtons));
+  card.append(cardHeader,cardBody.append(cardButtons));
   return card;
 };
 
@@ -565,8 +580,9 @@ const createDropDown = (key, label, options, employee) => {
 };
 
 const createDepartmentCard = (department) => {
-  let card = $("<div>").addClass("card");
-
+  let card = $("<div>")
+    .addClass("card");
+  let cardHeader = $("<h2>").addClass("card-header").text("Department");
   let cardBody = $("<div>").addClass("card-body");
   let cardIcon = $("<i>").addClass("fas fa-user fa-10x");
   let cardTitle = $("<h4>").addClass("card-title").text(department.name);
@@ -591,7 +607,7 @@ const createDepartmentCard = (department) => {
 
   cardBody.append(cardIcon, cardTitle, cardSalary, cardNumberEmployees);
 
-  card.append(cardBody);
+  card.append(cardHeader,cardBody);
   // Add action buttons
   createActionButtons(department, saveDepartment, deleteDepartment);
   return card;
@@ -600,9 +616,10 @@ const createDepartmentCard = (department) => {
 const createNewDepartmentCard = (department) => {
   let card = $("<div>").addClass("card");
   // .attr("style", "width: 18rem;");
+  let cardHeader = $("<h2>").addClass("card-header").text("New Department");
   let cardBody = $("<div>").addClass("card-body");
   let cardIcon = $("<i>").addClass("fas fa-user fa-10x");
-  let cardTitle = $("<h4>").addClass("card-title").text("New Department");
+  let cardTitle = $("<h4>").addClass("card-title")//.text("New Department");
   let labelDepartment = $("<p>")
     .attr("style", "margin-top: 10px; width: 100px;")
     .text("Department");
@@ -616,7 +633,7 @@ const createNewDepartmentCard = (department) => {
   cardButtons.append(labelDepartment, cardDepartment);
   // Add save and cancel buttons
   let saveButton = $("<button>")
-    .addClass("btn btn-info")
+    .addClass("btn btn-primary")
     // .text("Save")
     .click(function () {
       // Set employee properties
@@ -626,13 +643,14 @@ const createNewDepartmentCard = (department) => {
     });
 
   addSaveAndCancelButtons(saveButton);
-  card.append(cardBody.append(cardButtons));
+  card.append(cardHeader,cardBody.append(cardButtons));
   return card;
 };
 
 const createRoleCard = (role) => {
-  let card = $("<div>").addClass("card").attr("style", "width: 18rem;");
-
+  let card = $("<div>")
+    .addClass("card")
+  let cardHeader = $("<h2>").addClass("card-header").text("Role");
   let cardBody = $("<div>").addClass("card-body");
   let cardIcon = $("<i>").addClass("fas fa-user fa-10x");
   let cardTitle = $("<h4>").addClass("card-title").text(role.title);
@@ -657,7 +675,7 @@ const createRoleCard = (role) => {
   cardBody.append(cardButtons);
   // Create save and delete buttons
   createActionButtons(role, saveRole, deleteRole);
-  card.append(cardBody);
+  card.append(cardHeader,cardBody);
   return card;
 };
 
@@ -688,11 +706,12 @@ const createNewTitleGroup = () => {
 }
 
 const createNewRoleCard = (role) => {
-  let card = $("<div>").addClass("card");
-  // .attr("style", "width: 18rem;");
+  let card = $("<div>")
+    .addClass("card");
+  let cardHeader = $("<h2>").addClass("card-header").text("New Role");
   let cardBody = $("<div>").addClass("card-body");
   let cardIcon = $("<i>").addClass("fas fa-user fa-10x");
-  let cardTitle = $("<h4>").addClass("card-title").text("New Role");
+  let cardTitle = $("<h4>").addClass("card-title");//.text("New Role");
 
   let cardButtons = $("<div>").addClass("btn-group-vertical");
 
@@ -704,7 +723,7 @@ const createNewRoleCard = (role) => {
 
   // Add save and cancel buttons
   let saveButton = $("<button>")
-    .addClass("btn btn-info")
+    .addClass("btn btn-primary")
     // .text("Save")
     .click(function () {
       // Set employee properties
@@ -714,7 +733,7 @@ const createNewRoleCard = (role) => {
 
   addSaveAndCancelButtons(saveButton);
   cardBody.append(cardIcon, cardTitle, cardButtons, $("<br>"));
-  card.append(cardBody);
+  card.append(cardHeader,cardBody);
   return card;
 };
 
