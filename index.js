@@ -176,23 +176,26 @@ const updateEmployeeManager = () => {
             choices: manager_choices
         }
     ]).then((answers) => {
+        processEmployeeManager(answers);
+    });
+}
 
-        if (answers.manager === answers.employee) {
-            log.red("An employee cannot be their own manager!");
-            updateEmployeeManager();
-            return;
-        }
+const processEmployeeManager = (answers) => {
+    if (answers.manager === answers.employee) {
+        log.red("An employee cannot be their own manager!");
+        updateEmployeeManager();
+        return;
+    }
 
-        let manager_id = null;
-        if (answers.manager !== "None") {
-            manager_id = EMPLOYEES.find((employee) => employee.name() == answers.manager).id;
-        }
-        let employee = EMPLOYEES.find((employee) => employee.name() == answers.employee);
-        Employee.updateManager(employee.id, manager_id).then(() => {
-            log.green("Employee manager updated successfully!");
-            load();
-            menu();
-        });
+    let manager_id = null;
+    if (answers.manager !== "None") {
+        manager_id = EMPLOYEES.find((employee) => employee.name() == answers.manager).id;
+    }
+    let employee = EMPLOYEES.find((employee) => employee.name() == answers.employee);
+    Employee.updateManager(employee.id, manager_id).then(() => {
+        log.green("Employee manager updated successfully!");
+        load();
+        menu();
     });
 }
 const deleteEmployee = () => {

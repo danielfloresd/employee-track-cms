@@ -158,7 +158,7 @@ const loadDepartments = () => {
       row.append($("<td>").text(num_emplpoyees));
       row.append(
         $("<td>").text(
-         formatter.format(budget)
+          formatter.format(budget)
         )
       );
 
@@ -229,52 +229,19 @@ const initDepartments = () => {
 
 const selectDepartment = (department) => {
   $("#employee-table").empty();
-
   let employees = !department
     ? EMPLOYEES
     : EMPLOYEES.filter((employee) => employee.department === department.name);
-
   // Add icon to first column
-
   for (let i = 0; i < employees.length; i++) {
     let employee = employees[i];
     let tr = $("<tr>");
-
-    let td = $("<td>").text(employee.first_name);
-    tr.append(td);
-    td = $("<td>").text(employee.last_name);
-    tr.append(td);
-
-    td = $("<td>").text(employee.title);
-    tr.append(td);
-
-    // Fromat salary as currency
-    let salary = employee.salary
-      ? employee.salary.toLocaleString("en-US", {
-        style: "currency",
-        currency: "USD",
-      })
-      : "";
-    td = $("<td>").text(salary);
-    tr.append(td);
-
-    td = $("<td>").text(employee.department);
-    tr.append(td);
-
-    td = $("<td>").text(employee.manager);
-    tr.append(td);
-
-    let tdActions = $("<td>");
-
-    let deleteButton = $("<button>")
-      .addClass("btn btn-outline-danger btn-sm")
-      .click(function () {
-        deleteEmployee(employee);
-      });
-    // Add icon to button
-    deleteButton.prepend($("<i>").addClass("fas fa-trash-alt"));
-    tdActions.append(deleteButton);
-
+    tr.append($("<td>").text(employee.first_name));
+    tr.append($("<td>").text(employee.last_name));
+    tr.append($("<td>").text(employee.title));
+    tr.append($("<td>").text(employee.salary ? formatter.format(employee.salary) : ""));
+    tr.append($("<td>").text(employee.department));
+    tr.append($("<td>").text(employee.manager));
     // Add double click event to row
     tr.dblclick(function () {
       editEmployee(employee);
@@ -377,7 +344,7 @@ const createEmployeeRoleGroup = (employee) => {
   let role_options = ROLES.map((role) => role.title);
   let cardRoleDropdown = createDropDown("title", role, role_options, employee);
   let cardRoleGroup = $("<div>").addClass("btn-group");
-  
+
   let labelRole = $("<p>")
     // .addClass("card-subtitle mb-2 text-muted")
     .attr("style", "margin-top: 2px; width: 100px;")
@@ -391,13 +358,13 @@ const createEmployeeDepartmentGroup = (employee) => {
   let department = employee.department ? employee.department : "Select";
   // Check if employee object is a Role class
   let labelDepartment = $("<p>")
-  .attr("style", "margin-top: 2px; width: 100px;")
-  .text("Department")
-  .attr("style", "margin-top: 2px; width: 100px;")
-  .text("Department");
+    .attr("style", "margin-top: 2px; width: 100px;")
+    .text("Department")
+    .attr("style", "margin-top: 2px; width: 100px;")
+    .text("Department");
   let cardDepartmentGroup = $("<div>").addClass("btn-group");
   let department_options = DEPARTMENTS.map((department) => department.name);
-  let cardDepartmentDropdown = createDropDown("department", department,department_options , employee);
+  let cardDepartmentDropdown = createDropDown("department", department, department_options, employee);
   cardDepartmentGroup.append(labelDepartment, cardDepartmentDropdown);
   return cardDepartmentGroup;
 }
@@ -441,7 +408,7 @@ const createEmployeeCard = (employee) => {
     .text("Salary: " + formatter.format(employee.salary));
 
   cardBody.append(cardIcon, cardTitle, cardSalary);
-  
+
   cardButtons.append(createEmployeeRoleGroup(employee));
   cardButtons.append(createEmployeeDepartmentGroup(employee));
   cardButtons.append(createEmployeeManagerGroup(employee));
@@ -546,29 +513,32 @@ const createNewEmployeeCard = (employee) => {
     .addClass("btn btn-info")
     // .text("Save")
     .click(function () {
-      // Set employee properties
-      employee.first_name = $("#first_name").val();
-      employee.last_name = $("#last_name").val();
-      // Get selected role
-      let role = $("#title").val();
-      let role_index = ROLES.findIndex((r) => r.title === role);
-      employee.role_id = ROLES[role_index].id;
-      // Get selected manager
-      let manager = $("#manager").val();
-      let manager_index = EMPLOYEES.findIndex(
-        (e) => e.first_name + " " + e.last_name === manager
-      );
-      employee.manager_id = EMPLOYEES[manager_index].id;
-      // Get selected department
+      saveNewEmployee(employee);
       $("#modal").modal("hide");
-      newEmployee(employee);
+
     });
 
   addSaveAndCancelButtons(saveButton);
-
   card.append(cardBody.append(cardButtons));
   return card;
 };
+
+const saveNewEmployee = (employee) => {
+  employee.first_name = $("#first_name").val();
+  employee.last_name = $("#last_name").val();
+  // Get selected role
+  let role = $("#title").val();
+  let role_index = ROLES.findIndex((r) => r.title === role);
+  employee.role_id = ROLES[role_index].id;
+  // Get selected manager
+  let manager = $("#manager").val();
+  let manager_index = EMPLOYEES.findIndex(
+    (e) => e.first_name + " " + e.last_name === manager
+  );
+  employee.manager_id = EMPLOYEES[manager_index].id;
+  // Get selected department
+  newEmployee(employee);
+}
 
 const createDropDown = (key, label, options, employee) => {
   let dropdown = $("<div>").addClass("dropdown");
@@ -598,7 +568,7 @@ const createDepartmentCard = (department) => {
   let cardBody = $("<div>").addClass("card-body");
   let cardIcon = $("<i>").addClass("fas fa-user fa-10x");
   let cardTitle = $("<h4>").addClass("card-title").text(department.name);
-  
+
   let budget = EMPLOYEES.filter(
     (employee) => employee.department === department.name
   ).reduce((total, employee) => total + employee.salary, 0);
