@@ -127,23 +127,39 @@ const loadRoles = () => {
   });
 };
 
+const createDepartmentFilterButtons = (data) => {
+  for (let i = 0; i < data.length; i++) {
+    let li = $("<li>")
+      .append(
+        $("<button>").addClass("btn btn-info btn-block").text(data[i].name)
+      )
+      .attr("id", data[i].id)
+      .click(function () {
+        selectDepartment(data[i]);
+      });
+    $("#employees").append(li);
+  }
+}
+
+const createTotalBudgetRow = (total_budget) => {
+  let row = $("<tr>");
+  row.append($("<td>")
+    .text("Total Budget"))
+  row.append($("<td>").text(""));
+  row.append(
+    $("<td>").text(
+      formatter.format(total_budget)
+    )
+  );
+  $("#departments-table").append(row);
+}
 const loadDepartments = () => {
   $("#departments-table").empty();
   getDepartments().then((data) => {
     DEPARTMENTS = data;
     let total_budget = 0;
-
+    createDepartmentFilterButtons(data);
     for (let i = 0; i < data.length; i++) {
-      let li = $("<li>")
-        .append(
-          $("<button>").addClass("btn btn-info btn-block").text(data[i].name)
-        )
-        .attr("id", data[i].id)
-        .click(function () {
-          selectDepartment(data[i]);
-        });
-      $("#employees").append(li);
-
       // Add row to departments table
       let num_emplpoyees = EMPLOYEES.filter(
         (e) => e.department == data[i].name
@@ -156,11 +172,7 @@ const loadDepartments = () => {
       let row = $("<tr>");
       row.append($("<td>").text(data[i].name));
       row.append($("<td>").text(num_emplpoyees));
-      row.append(
-        $("<td>").text(
-          formatter.format(budget)
-        )
-      );
+      row.append($("<td>").text(formatter.format(budget)));
 
       // Add double click event to row
       row.dblclick(function () {
@@ -170,18 +182,7 @@ const loadDepartments = () => {
       $("#departments-table").append(row);
     }
     // Add total budget as the last row
-    let row = $("<tr>");
-    row.append($("<td>")
-      .text("Total Budget"))
-    row.append($("<td>").text(""));
-    row.append(
-      $("<td>").text(
-        formatter.format(total_budget)
-      )
-    );
-    $("#departments-table").append(row);
-
-
+    createTotalBudgetRow(total_budget);
   });
 };
 
