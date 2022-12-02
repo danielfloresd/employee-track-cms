@@ -186,25 +186,17 @@ const loadDepartments = () => {
   });
 };
 
-const initDepartments = () => {
-  getEmployees().then((data) => {
-    EMPLOYEES = data;
-    selectDepartment();
-  });
-
-  loadRoles();
-  loadDepartments();
-
+const createAllEmployeesButton = () => {
   // Add button to show all employees
   let li = $("<li>")
     .append($("<button>").addClass("btn btn-info btn-block").text("All"))
-    .attr("id", "all")
     .click(function () {
       selectDepartment();
     });
   $("#employees").append(li);
+}
 
-  // Add listner on button to add employee
+const addAddListeners = () => {
   $("#employee-add").click(function () {
     let employee = {
       id: 0,
@@ -226,6 +218,19 @@ const initDepartments = () => {
     let role = { id: 0, title: "", salary: 0, department: "" };
     addRole(role);
   });
+}
+
+const initDepartments = () => {
+  getEmployees().then((data) => {
+    EMPLOYEES = data;
+    selectDepartment();
+  });
+
+  loadRoles();
+  loadDepartments();
+  createAllEmployeesButton();
+  // Add listner on button to add employee
+  addAddListeners();
 };
 
 const selectDepartment = (department) => {
