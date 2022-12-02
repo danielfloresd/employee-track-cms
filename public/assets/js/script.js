@@ -702,15 +702,7 @@ const createNewRoleCard = (role) => {
     .addClass("form-control")
     .attr("id", "title")
     .attr("placeholder", "Enter role title");
-  let labelDepartment = $("<p>")
-    .attr("style", "margin-top: 10px; width: 100px;")
-    .text("Department");
-  let cardDepartmentDropdown = createDropDown(
-    "department",
-    "Select",
-    DEPARTMENTS.map((department) => department.name),
-    role
-  );
+
   let labelSalary = $("<p>")
     .attr("style", "margin-top: 10px; width: 100px;")
     .text("Salary");
@@ -724,11 +716,11 @@ const createNewRoleCard = (role) => {
   // Create horizontal button group for title, department, and salary
   let cardTitleGroup = $("<div>").addClass("btn-group");
   cardTitleGroup.append(labelTitle, cardTitleInput);
-  let cardDepartmentGroup = $("<div>").addClass("btn-group");
-  cardDepartmentGroup.append(labelDepartment, cardDepartmentDropdown);
   let cardSalaryGroup = $("<div>").addClass("btn-group");
   cardSalaryGroup.append(labelSalary, cardSalaryInput);
-  cardButtons.append(cardTitleGroup, cardDepartmentGroup, cardSalaryGroup);
+  cardButtons.append(cardTitleGroup);
+  cardButtons.append(createEmployeeDepartmentGroup(role));
+  cardButtons.append(cardSalaryGroup);
 
   // Add save and cancel buttons
   let saveButton = $("<button>")
@@ -736,10 +728,7 @@ const createNewRoleCard = (role) => {
     // .text("Save")
     .click(function () {
       // Set employee properties
-      role.title = $("#title").val();
-      role.salary = $("#salary").val();
-      role.department = $("#department").val();
-      newRole(role);
+      saveRoleAction(role);
       $("#modal").modal("hide");
     });
 
@@ -748,6 +737,13 @@ const createNewRoleCard = (role) => {
   card.append(cardBody);
   return card;
 };
+
+const saveRoleAction = (role) => {
+  role.title = $("#title").val();
+  role.salary = $("#salary").val();
+  role.department = $("#department").val();
+  newRole(role);
+}
 
 const addSaveAndCancelButtons = (saveButton) => {
   let cancelButton = $("<button>")
