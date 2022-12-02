@@ -81,15 +81,11 @@ const confirmDelete = (description, AClass) => {
         });
 }
 
-// ======================= EMPLOYEE SECTION =======================
-const addEmployee = () => {
-
-    // Get all employees
+const createAddEmployeeQuestions = () => {
     let role_choices = ROLES.map((role) => role.title);
     let manager_choices = EMPLOYEES.map((employee) => employee.first_name + " " + employee.last_name);
     manager_choices.push("None");
-
-    inquirer.prompt([
+    let questions = [
         {
             type: 'input',
             name: 'firstName',
@@ -112,7 +108,16 @@ const addEmployee = () => {
             message: "Who is the employee's manager?",
             choices: manager_choices
         }
-    ]).then((answers) => {
+    ]
+    return questions;
+}
+// ======================= EMPLOYEE SECTION =======================
+const addEmployee = () => {
+
+    // Get all employees
+    inquirer.prompt(
+        createAddEmployeeQuestions())
+        .then((answers) => {
 
         let role = ROLES.find((role) => role.title == answers.role);
 
