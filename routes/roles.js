@@ -13,7 +13,8 @@ router.get('/', (req, res) => {
 });
 
 router.put('/:id', (req, res) => {
-    let { title, salary, department } = req.body;
+    let { id, title, salary, department } = req.body;
+   
     Role.update(id, title, salary, department).then((results) => {
         res.send(results);
     });
