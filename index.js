@@ -72,7 +72,7 @@ const confirmDelete = (description, AClass) => {
         }]).then((answers) => {
             if (answers.confirm) {
                 AClass.delete(description).then(() => {
-                    log.green("Department deleted successfully!");
+                    log.red("Department deleted successfully!");
                     menu();
                 });
             } else {
@@ -126,7 +126,7 @@ const addEmployee = () => {
             manager_id = EMPLOYEES.find((employee) => employee.first_name + " " + employee.last_name === answers.manager).id;
         }
         Employee.create(answers.firstName, answers.lastName, role.id, manager_id).then(() => {
-            log.green("Employee added successfully!");
+            log.red("Employee added successfully!");
             load();
             menu();
         });
@@ -155,7 +155,7 @@ const updateEmployeeRole = () => {
         let role = ROLES.find((role) => role.title == answers.role);
         let employee = EMPLOYEES.find((employee) => employee.name() == answers.employee);
         Employee.updateRole(employee.id, role.id).then(() => {
-            log.green("Employee role updated successfully!");
+            log.red("Employee role updated successfully!");
             load();
             menu();
         });
@@ -198,13 +198,13 @@ const processEmployeeManager = (answers) => {
     }
     let employee = EMPLOYEES.find((employee) => employee.name() == answers.employee);
     Employee.updateManager(employee.id, manager_id).then(() => {
-        log.green("Employee manager updated successfully!");
+        log.red("Employee manager updated successfully!");
         load();
         menu();
     });
 }
 const deleteEmployee = () => {
-    log.cyan("Delete Employee");
+    log.red("Delete Employee");
     // Prompt user for employee information
     let choices = EMPLOYEES.map((employee) => employee.name());
 
@@ -223,8 +223,9 @@ const deleteEmployee = () => {
 }
 
 const viewAllEmployees = () => {
-    log.green("View All Employees");
+    log.red("View All Employees");
     Employee.getAll().then((employees) => {
+        log.white();
         console.table(employees.map((employee) => employee.getDescription()));
         menu();
     });
@@ -232,7 +233,7 @@ const viewAllEmployees = () => {
 }
 
 const viewAllEmployeesByManager = () => {
-    log.green("View Employees By Manager");
+    log.red("View Employees By Manager");
     // Group all employees by their manager
     let managers = {};
     EMPLOYEES.forEach((employee) => {
@@ -243,6 +244,7 @@ const viewAllEmployeesByManager = () => {
     });
     // Display the employees grouped by their manager
     for (let manager in managers) {
+        log.white();
         console.group(manager);
         console.table(managers[manager]);
         console.groupEnd();
@@ -251,14 +253,14 @@ const viewAllEmployeesByManager = () => {
 }
 
 const viewAllManagers = () => {
-    log.green("View All Managers");
-    // Get all employees
+    log.red("View All Managers");
+    log.white();
     console.table(EMPLOYEES.filter((employee) => employee.isManager()).map((employee) => employee.getDescription()));
     menu();
 }
 
 const viewAllEmployeesByDepartment = () => {
-    log.green("View All Employees By Department");
+    log.red("View All Employees By Department");
     Employee.getAll().then((employees) => {
         let employeesByDepartment = {};
         // Group employees by department using a map
@@ -274,6 +276,7 @@ const viewAllEmployeesByDepartment = () => {
         for (let department in employeesByDepartment) {
             console.group(department);
             // console.log(department);
+            log.white();
             console.table(employeesByDepartment[department]);
             console.groupEnd();
         }
@@ -286,7 +289,7 @@ const viewAllEmployeesByDepartment = () => {
 // ======================= ROLE SECTION =======================
 
 const addRole = () => {
-    log.cyan("Add Role");
+    log.red("Add Role");
 
     // Prompt user for role information
     inquirer.prompt([
@@ -309,7 +312,7 @@ const addRole = () => {
     ]).then((answers) => {
         // Create new role object
         Role.create(answers.title, answers.salary, answers.department).then(() => {
-            log.green("Role added successfully!");
+            log.red("Role added successfully!");
             load();
             menu();
         });
@@ -317,7 +320,7 @@ const addRole = () => {
 }
 
 const deleteRole = () => {
-    log.cyan("Delete Role");
+    log.red("Delete Role");
     // Prompt user for role information
     let choices = ROLES.map(role => role.title);
     inquirer.prompt([
@@ -337,6 +340,7 @@ const viewAllRoles = () => {
     Role.getAll().then((roles) => {
         // Format the salary to be in dollars
         let roles_desc = roles.map((role) => role.getDescription());
+        log.white();
         console.table(roles_desc);
         menu();
     });
@@ -345,7 +349,7 @@ const viewAllRoles = () => {
 // ======================= END ROLE SECTION =======================
 // ======================= DEPARTMENT SECTION =======================
 const addDepartment = () => {
-    log.cyan("Add Department");
+    log.red("Add Department");
     // Prompt user for department information
     inquirer.prompt([
         {
@@ -356,7 +360,7 @@ const addDepartment = () => {
     ]).then((answers) => {
         // Create new department object
         Department.create(answers.name).then(() => {
-            log.green("Department added successfully!");
+            log.red("Department added successfully!");
             load();
             menu();
         });
@@ -364,7 +368,7 @@ const addDepartment = () => {
 }
 
 const deleteDepartment = () => {
-    log.cyan("Delete Department");
+    log.red("Delete Department");
     // Prompt user for department information
     let choices = DEPARTMENTS.map(department => department.name);
     inquirer.prompt([
@@ -383,13 +387,14 @@ const deleteDepartment = () => {
 
 const viewAllDepartments = () => {
     Department.getAll().then((departments) => {
+        log.white();
         console.table(departments);
         menu();
     });
 }
 
 const viewDepartmentBudget = () => {
-    log.cyan("View Department Budget");
+    log.red("View Department Budget");
     Employee.getAll().then((employees) => {
         let employeesByDepartment = {};
         // Group employees by department using a map
@@ -413,6 +418,7 @@ const viewDepartmentBudget = () => {
                 Budget: FORMATTER.format(departmentBudget)
             });
         }
+        log.white();
         console.table(budgets);
         menu();
     });
@@ -430,26 +436,26 @@ const into = () => {
             width: 80,
             whitespaceBreak: true
         }));
-    log.green("Welcome to the Employee Tracker CMS");
+    log.red("Welcome to the Employee Tracker CMS");
 
 }
 
 const menuMap = {
+    "View All Departments": viewAllDepartments,
+    "View All Roles": viewAllRoles,
     "View All Employees": viewAllEmployees,
     "View All Employees By Manager": viewAllEmployeesByManager,
     "View All Employees By Department": viewAllEmployeesByDepartment,
-    "Add Employee": addEmployee,
-    "Update Employee Role": updateEmployeeRole,
-    "Update Employee Manager": updateEmployeeManager,
-    "Delete Employee": deleteEmployee,
-    "View All Managers": viewAllManagers,
-    "View All Roles": viewAllRoles,
-    "Add Role": addRole,
-    "Delete Role": deleteRole,
-    "View All Departments": viewAllDepartments,
     "Add Department": addDepartment,
+    "Add Employee": addEmployee,
+    "Add Role": addRole,
+    "Update Employee Role": updateEmployeeRole,
     "Delete Department": deleteDepartment,
-    "View Department Budget": viewDepartmentBudget
+    "Delete Role": deleteRole,
+    "Delete Employee": deleteEmployee,
+    "View Department Budget": viewDepartmentBudget,
+    "Update Employee Manager": updateEmployeeManager,
+    "View All Managers": viewAllManagers,
 }
 
 
@@ -463,7 +469,7 @@ const mainMenuQuestions = [
 ]
 
 const menu = () => {
-    log.green("Please select from the following options");
+    log.red("Please select from the following options");
     inquirer.prompt(mainMenuQuestions)
         .then((answers) => {
             if (menuMap[answers.choice]) {

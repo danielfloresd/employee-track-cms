@@ -230,24 +230,36 @@ const initDepartments = () => {
 };
 
 const selectDepartment = (department) => {
-  $("#employee-table").empty();
-  let employees = !department
-    ? EMPLOYEES
-    : EMPLOYEES.filter((employee) => employee.department === department.name);
-  // Check the with of the view to see if its a mobile device
-  let isMobile = window.innerWidth < 768;
+  try {
+    $("#employee-table").empty();
+    let employees = !department
+      ? EMPLOYEES
+      : EMPLOYEES.filter((employee) => employee.department === department.name);
+    let isMobile = window.innerWidth < 768;
+    let columns = isMobile ? ["First Name", "Last Name", "Role", "Salary"] :
+      ["First Name", "Last Name", "Role", "Salary", "Department", "Manager"];
 
-  let columns = isMobile ? ["First Name", "Last Name", "Role", "Salary"] :
-    ["First Name", "Last Name", "Role", "Salary", "Department", "Manager"];
-
-  let header = $("<tr>");
-  for (let i = 0; i < columns.length; i++) {
-    let th = $("<th>").text(columns[i]);
-    header.append(th);
+    let header = $("<tr>");
+    for (let i = 0; i < columns.length; i++) {
+      let th = $("<th>").text(columns[i]);
+      header.append(th);
+    }
+    $("#employee-table-header").empty();
+    $("#employee-table-header").append(header);
+    addIconToColumn();
+    addEmployeeRows(employees);
+    console.log("Department Selected")
+  } catch (error) {
+    console.error(error);
   }
-  $("#employee-table-header").empty();
-  $("#employee-table-header").append(header);
+};
+
+const addIconToColumn = () => {
   // Add icon to first column
+}
+
+const addEmployeeRows = (employees) => {
+  let isMobile = window.innerWidth < 768;
   for (let i = 0; i < employees.length; i++) {
     let employee = employees[i];
     let tr = $("<tr>");
