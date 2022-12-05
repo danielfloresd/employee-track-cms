@@ -31,7 +31,7 @@ Download Video in <a href="./public/images/video.webm">webm</a> or <a href="./pu
 
 ## 💻Usage    
 <p>
-After installing all dependencies run <strong>node index.js<strong> to start the CLI application. Additionally, you can run <strong>npm start</strong> to launch a webserver to access the interface thru the web browser.
+After installing all dependencies run <strong>node index.js</strong> to start the CLI application. Additionally, you can run <strong>npm start</strong> to launch a webserver to access the interface thru the web browser.
 </p>
 
 <img src="./public/assets/images/screenshot-2.PNG" width="480"><img>  
