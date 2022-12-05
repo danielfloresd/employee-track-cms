@@ -1,12 +1,12 @@
 [![DeepScan grade](https://deepscan.io/api/teams/19657/projects/23124/branches/691436/badge/grade.svg)](https://deepscan.io/dashboard#view=project&tid=19657&pid=23124&bid=691436)[![CodeFactor](https://www.codefactor.io/repository/github/danielfloresd/employee-track-cms/badge)](https://www.codefactor.io/repository/github/danielflores/demployee-track-cms)
 # Employee Track CMS
 ## Description   
-<p>This application will automatically generate a styled HTML file displaying all members of a development team. The application supports roles for Manager, Engineer, and Intern. Each employee will be displayed with his/her name, ID, and email. For Managers an office number should be provided, additionally, for Engineers, a GitHub id should be provided, and for Interns, a school name must be provided.
+<p>This CLI is a powerful tool for businesses looking to streamline the way they manage their organization. It helps them effectively assign departments, roles and salaries; add new employees; and create individualized salary roles. With this easy-to-use CLI, all company data and activities can be organized, managed, and tracked conveniently in one central database. There also a simple web interface that can be used to access the tool online.
 
 <p><strong>🎥Click on video to view🎥</strong></p>
 
 <a href="https://drive.google.com/file/d/1qTWG7uddcVcrCi7xVT3yNl4vStEt5ZMf/view?usp=share_link" target="_blank">
-<img src="./public/images/video.PNG" width="640" height="480"></img>
+<img src="./public/assets/images/screenshot.PNG" width="480"></img>
 </a>
 
 Download Video in <a href="./public/images/video.webm">webm</a> or <a href="./public/images/video.mp4">mp4</a>
@@ -26,23 +26,20 @@ Download Video in <a href="./public/images/video.webm">webm</a> or <a href="./pu
   * [Credits](#👨creadits)
 
 ## 🛠️Installation    
-<p>To install the application clone the repository https://github.com/danielfloresd/team-profile-generator and run node package manager with the following command: <strong>npm i</strong>    
+<p>To install the application clone the repository https://github.com/danielfloresd/employee-track-cms and run node package manager with the following command: <strong>npm i</strong>    
 </p>      
-<img src="./public/images/install.PNG" width="800"><img>
-
 
 ## 💻Usage    
 <p>
-After installing all dependencies run <strong>node index.js or npm start</strong>.
+After installing all dependencies run <strong>node index.js<strong> to start the CLI application. Additionally, you can run <strong>npm start</strong> to launch a webserver to access the interface thru the web browser.
 </p>
-<img src="./public/images/usage.PNG" width="800"><img>  
 
-<img src="./public/images/screenshot.PNG" width="800"><img>  
+<img src="./public/assets/images/screenshot-2.PNG" width="480"><img>  
 
 ## 🧩Dependencies   
-* [Inquirer.js](https://www.npmjs.com/package/inquirer)
-* [Jest](https://www.npmjs.com/package/jest)
-* [Foundation](https://get.foundation/)
+* inquirer
+* mysql
+* bootstrap
 
 ## 📛License    
 Project license: [MIT](https://choosealicense.com/licenses/mit).     
@@ -77,27 +74,21 @@ If you would like to contribute, please follow the [GitHub contribution guidelin
 ## 📃Tests  
 Testing implemented using jest. To run unit testing <strong>npm test</strong>
 
-<img src="./public/images/test.PNG" width="800"><img>
-
 ## ❓Questions   
-<p> Question 1: Does the application support additional styling? Yes, the style can be customized in the style.css file.
-</p>
-For additional questions, please contact:
+For questions, please contact:
 
 * [![GitHub github:](https://img.shields.io/badge/github:-danielfloresd-black.svg)](https://github.com/danielfloresd)   
 * [![email](https://img.shields.io/badge/email:-daniel.flor3s.d@gmail.com-blue.svg)](mailto:daniel.flor3s.d@gmail.com)    
         
 ## 🌐Website    
-To use the web app, please visit the [Team Profile Generator](https://danielfloresd.github.io/team-profile-generator/)  
+To use the web app, please visit the [Employee Track CMS](https://employee-track-cms.herokuapp.com/)
+<img src="./public/assets/images/screenshot-web.PNG" width="480"></img>  
 
 ## 👨‍💻Programming Languages    
-This project was created with: HTML, CSS, and JavaScript   
+This project was created with: JavaScript, SQL, HTML   
 
 ## 👨Credits
  logger.js used to print colorful messages to console log was borrowed from the University of Arizona bootcamp course material  
-
-## 👨Credits
- logger.js used to print colorful messages to console log was borrowed from the University of Arizona bootcamp course material
 
 <!-- <b>User Story</b>
 AS A manager
