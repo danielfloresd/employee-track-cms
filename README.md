@@ -30,7 +30,7 @@ Download Video in <a href="./public/images/video.webm">webm</a> or <a href="./pu
 
 ## 🛠️Installation
 
-<p>To install the application clone the repository https://github.com/danielfloresd/employee-track-cms and run node package manager with the following command: <strong>npm i</strong>    
+<p>To install the application clone the repository https://github.com/danielfloresd/employee-track-cms and run node package manager with the following command: <strong>npm i</strong>
 </p>
 
 ## 💻Usage
@@ -73,8 +73,8 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
-</details></br>   
-       
+</details></br>
+
 ## 🤝Contributing
 
 If you would like to contribute, please follow the [GitHub contribution guidelines](https://github.com/github/docs/blob/main/CONTRIBUTING.md)
@@ -88,7 +88,7 @@ Testing implemented using jest. To run unit testing <strong>npm test</strong>
 For questions, please contact:
 
 - [![GitHub github:](https://img.shields.io/badge/github:-danielfloresd-black.svg)](https://github.com/danielfloresd)
-- [![email](https://img.shields.io/badge/email:-daniel.flor3s.d@gmail.com-blue.svg)](mailto:daniel.flor3s.d@gmail.com)  
+- [![email](https://img.shields.io/badge/email:-daniel.flor3s.d@gmail.com-blue.svg)](mailto:daniel.flor3s.d@gmail.com)
 
 
 ## 🌐Website
