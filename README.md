@@ -1,6 +1,9 @@
 [![DeepScan grade](https://deepscan.io/api/teams/19657/projects/23124/branches/691436/badge/grade.svg)](https://deepscan.io/dashboard#view=project&tid=19657&pid=23124&bid=691436)[![CodeFactor](https://www.codefactor.io/repository/github/danielfloresd/employee-track-cms/badge)](https://www.codefactor.io/repository/github/danielflores/demployee-track-cms)
+
 # Employee Track CMS
-## Description   
+
+## Description
+
 <p>This CLI is a powerful tool for businesses looking to streamline the way they manage their organization. It helps them effectively assign departments, roles and salaries; add new employees; and create individualized salary roles. With this easy-to-use CLI, all company data and activities can be organized, managed, and tracked conveniently in one central database. There also a simple web interface that can be used to access the tool online.
 
 <p><strong>🎥Click on video to view🎥</strong></p>
@@ -13,36 +16,40 @@ Download Video in <a href="./public/images/video.webm">webm</a> or <a href="./pu
 
 ## Table of contents
 
-  * [Description](#description)
-  * [Installation](#🛠️installation)
-  * [Usage](#💻usage)
-  * [Dependencies](#🧩dependencies)
-  * [License](#📛license)
-  * [Contributing](#🤝contributing)
-  * [Tests](#📃tests)
-  * [Questions](#❓questions)
-  * [Website](#🌐website)
-  * [Programming Languages](#👨‍💻programming-languages)
-  * [Credits](#👨creadits)
+- [Description](#description)
+- [Installation](#🛠️installation)
+- [Usage](#💻usage)
+- [Dependencies](#🧩dependencies)
+- [License](#📛license)
+- [Contributing](#🤝contributing)
+- [Tests](#📃tests)
+- [Questions](#❓questions)
+- [Website](#🌐website)
+- [Programming Languages](#👨‍💻programming-languages)
+- [Credits](#👨creadits)
 
-## 🛠️Installation    
+## 🛠️Installation
+
 <p>To install the application clone the repository https://github.com/danielfloresd/employee-track-cms and run node package manager with the following command: <strong>npm i</strong>    
-</p>      
+</p>
 
-## 💻Usage    
+## 💻Usage
+
 <p>
 After installing all dependencies run <strong>node index.js<strong> to start the CLI application. Additionally, you can run <strong>npm start</strong> to launch a webserver to access the interface thru the web browser.
 </p>
 
-<img src="./public/assets/images/screenshot-2.PNG" width="480"><img>  
+<img src="./public/assets/images/screenshot-2.PNG" width="480"><img>
 
-## 🧩Dependencies   
-* inquirer
-* mysql
-* bootstrap
+## 🧩Dependencies
 
-## 📛License    
-Project license: [MIT](https://choosealicense.com/licenses/mit).     
+- inquirer
+- mysql
+- bootstrap
+
+## 📛License
+
+Project license: [MIT](https://choosealicense.com/licenses/mit).
 
 <details><summary><b>View License</b></summary>MIT License
 
@@ -65,30 +72,37 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
+
 </details></br>   
        
-## 🤝Contributing 
+## 🤝Contributing
 
-If you would like to contribute, please follow the [GitHub contribution guidelines](https://github.com/github/docs/blob/main/CONTRIBUTING.md)   
-      
-## 📃Tests  
+If you would like to contribute, please follow the [GitHub contribution guidelines](https://github.com/github/docs/blob/main/CONTRIBUTING.md)
+
+## 📃Tests
+
 Testing implemented using jest. To run unit testing <strong>npm test</strong>
 
-## ❓Questions   
+## ❓Questions
+
 For questions, please contact:
 
-* [![GitHub github:](https://img.shields.io/badge/github:-danielfloresd-black.svg)](https://github.com/danielfloresd)   
-* [![email](https://img.shields.io/badge/email:-daniel.flor3s.d@gmail.com-blue.svg)](mailto:daniel.flor3s.d@gmail.com)    
-        
-## 🌐Website    
-To use the web app, please visit the [Employee Track CMS](https://employee-track-cms.herokuapp.com/)
-<img src="./public/assets/images/screenshot-web.PNG" width="480"></img>  
+- [![GitHub github:](https://img.shields.io/badge/github:-danielfloresd-black.svg)](https://github.com/danielfloresd)
+- [![email](https://img.shields.io/badge/email:-daniel.flor3s.d@gmail.com-blue.svg)](mailto:daniel.flor3s.d@gmail.com)  
 
-## 👨‍💻Programming Languages    
-This project was created with: JavaScript, SQL, HTML   
+
+## 🌐Website
+
+To use the web app, please visit the [Employee Track CMS](https://employee-track-cms.herokuapp.com/)
+<img src="./public/assets/images/screenshot-web.PNG" width="480"></img>
+
+## 👨‍💻Programming Languages
+
+This project was created with: JavaScript, SQL, HTML
 
 ## 👨Credits
- logger.js used to print colorful messages to console log was borrowed from the University of Arizona bootcamp course material  
+
+logger.js used to print colorful messages to console log was borrowed from the University of Arizona bootcamp course material
 
 <!-- <b>User Story</b>
 AS A manager
@@ -115,8 +129,6 @@ WHEN I decide to finish building my team
 THEN I exit the application, and the HTML is generated
 
 </p>    -->
-      
-
 
 <!-- User Story
 AS A business owner
