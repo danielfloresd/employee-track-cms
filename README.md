@@ -5,11 +5,11 @@
 
 <p><strong>🎥Click on video to view🎥</strong></p>
 
-<a href="https://drive.google.com/file/d/1qTWG7uddcVcrCi7xVT3yNl4vStEt5ZMf/view?usp=share_link" target="_blank">
+<a href="https://drive.google.com/file/d/1JrwVReaSKaLkOlRV6c594j_QVrdX8tyz/view" target="_blank">
 <img src="./public/assets/images/screenshot.PNG" width="480"></img>
 </a>
 
-Download Video in <a href="./public/images/video.webm">webm</a> or <a href="./public/images/video.mp4">mp4</a>
+Download Video in <a href="./public/images/video.webm">webm</a>
 
 ## Table of contents
 
@@ -33,8 +33,6 @@ Download Video in <a href="./public/images/video.webm">webm</a> or <a href="./pu
 <p>
 After installing all dependencies run <strong>node index.js</strong> to start the CLI application. Additionally, you can run <strong>npm start</strong> to launch a webserver to access the interface thru the web browser.
 </p>
-
-<img src="./public/assets/images/screenshot-2.PNG" width="480"><img>  
 
 ## 🧩Dependencies   
 * inquirer
