@@ -1,3 +1,7 @@
+DROP DATABASE IF EXISTS employee_track_cms;
+CREATE DATABASE employee_track_cms;
+
+USE employee_track_cms;
 /* Drop employees, roles, and employees tables */
 DROP TABLE IF EXISTS employees, roles, employees;
 
